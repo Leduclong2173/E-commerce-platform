@@ -82,6 +82,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                         </div>
                     </div>
                 </main>
+                <jsp:include page="../layout/footer.jsp" />
             </div>
         </div>
         <script
