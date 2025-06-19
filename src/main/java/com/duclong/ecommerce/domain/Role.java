@@ -21,9 +21,8 @@ public class Role {
     private String description;
 
     @OneToMany(mappedBy = "role")
-    private List<User> user;
+    private List<User> users;
 
-    
     public long getRole_id() {
         return role_id;
     }
@@ -48,18 +47,20 @@ public class Role {
         this.description = description;
     }
 
-    public List<User> getUser() {
-        return user;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setUser(List<User> user) {
-        this.user = user;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     @Override
     public String toString() {
-        return "Role [role_id=" + role_id + ", name=" + name + ", description=" + description + ", user=" + user + "]";
+        return "Role [role_id=" + role_id + ", name=" + name + ", description=" + description + ", users=" + users
+                + "]";
     }
+
     
     
 }
