@@ -1,5 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%> <%@taglibprefix="c"
-uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%> <%@taglibprefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <footer class="py-4 bg-light mt-auto">
     <div class="container-fluid px-4">
