@@ -53,10 +53,22 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
                                         class="row"
                                         enctype="multipart/form-data"
                                     >
+                                        <c:set var="errorName">
+                                            <form:errors path="name" cssClass="invalid-feedback" />
+                                        </c:set>
+                                        <c:set var="errorEmail">
+                                            <form:errors path="email" cssClass="invalid-feedback" />
+                                        </c:set>
+                                        <c:set var="errorPassword">
+                                            <form:errors path="password" cssClass="invalid-feedback" />
+                                        </c:set>
+                                        <c:set var="errorPhone">
+                                            <form:errors path="phone" cssClass="invalid-feedback" />
+                                        </c:set>
+                                        <c:set var="errorRole">
+                                            <form:errors path="role.name" cssClass="invalid-feedback" />
+                                        </c:set>
                                         <div class="mb-3 col-12 col-md-6">
-                                            <c:set var="errorName">
-                                                <form:errors path="name" cssClass="invalid-feedback" />
-                                            </c:set>
                                             <label for="InputName" class="form-label">Name</label>
                                             <form:input
                                                 type="text"
@@ -67,9 +79,6 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
                                             ${errorName}
                                         </div>
                                         <div class="mb-3 col-12 col-md-6">
-                                            <c:set var="errorEmail">
-                                                <form:errors path="email" cssClass="invalid-feedback" />
-                                            </c:set>
                                             <label for="InputEmail" class="form-label">Email</label>
                                             <form:input
                                                 type="email"
@@ -80,9 +89,6 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
                                             ${errorEmail}
                                         </div>
                                         <div class="mb-3 col-12 col-md-6">
-                                            <c:set var="errorPassword">
-                                                <form:errors path="password" cssClass="invalid-feedback" />
-                                            </c:set>
                                             <label for="InputPassword" class="form-label">Password</label>
                                             <form:input
                                                 type="password"
@@ -94,23 +100,30 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
                                         </div>
                                         <div class="mb-3 col-12 col-md-6">
                                             <label for="InputPhone" class="form-label">Phone</label>
-                                            <form:input type="number" class="form-control" id="InputPhone" path="phone" />
+                                            <form:input
+                                                type="text"
+                                                class="form-control ${not empty errorPhone ? 'is-invalid' : ''}"
+                                                id="InputPhone"
+                                                path="phone"
+                                            />
+                                            ${errorPhone}
                                         </div>
                                         <div class="mb-3 col-12">
                                             <label for="InputAddress" class="form-label">Address</label>
                                             <form:input type="text" class="form-control" id="InputAddress" path="address" />
                                         </div>
-                                        <div class="mb-3 col-12 col-md-6">
+                                        <!-- <div class="mb-3 col-12 col-md-6">
                                             <label class="form-label">Role</label>
-                                            <form:select class="form-select" path="role.name">
+                                            <form:select class="form-select ${not empty errorRole ? 'is-invalid' : ''}" path="role.name">
+                                                <form:option value="">-- Select Role --</form:option>
                                                 <form:option value="ADMIN">ADMIN</form:option>
                                                 <form:option value="USER">USER</form:option>
                                                 <form:option value="SELLER">SELLER</form:option>
                                             </form:select>
-                                        </div>
+                                        </div> -->
                                         <div class="mb-3 col-12 col-md-6">
                                             <label for="avatarFile" class="form-label">Avatar</label>
-                                            <input class="form-control" type="file" id="avatarFile" accept=".png, .jpg, .jpeg" name="hoidanitFile" />
+                                            <input class="form-control" type="file" id="avatarFile" accept=".png, .jpg, .jpeg" name="avatarFile" />
                                         </div>
                                         <div class="col-12 mb-3">
                                             <img style="max-height: 250px; display: none" alt="avatar preview" id="avatarPreview" />
