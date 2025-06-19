@@ -112,7 +112,7 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
                                             <label for="InputAddress" class="form-label">Address</label>
                                             <form:input type="text" class="form-control" id="InputAddress" path="address" />
                                         </div>
-                                        <!-- <div class="mb-3 col-12 col-md-6">
+                                        <div class="mb-3 col-12 col-md-6">
                                             <label class="form-label">Role</label>
                                             <form:select class="form-select ${not empty errorRole ? 'is-invalid' : ''}" path="role.name">
                                                 <form:option value="">-- Select Role --</form:option>
@@ -120,7 +120,7 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
                                                 <form:option value="USER">USER</form:option>
                                                 <form:option value="SELLER">SELLER</form:option>
                                             </form:select>
-                                        </div> -->
+                                        </div>
                                         <div class="mb-3 col-12 col-md-6">
                                             <label for="avatarFile" class="form-label">Avatar</label>
                                             <input class="form-control" type="file" id="avatarFile" accept=".png, .jpg, .jpeg" name="avatarFile" />
