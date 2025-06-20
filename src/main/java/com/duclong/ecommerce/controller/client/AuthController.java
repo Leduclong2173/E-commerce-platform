@@ -69,10 +69,13 @@ public class AuthController {
         return "redirect:/login";
     }
 
-
     @GetMapping("/login")
-    public String getLogin(Model model) {
-        // model.addAttribute("newUser", new User());
+    public String getLoginPage() {
         return "client/auth/login";
+    }
+
+    @GetMapping("/access-deny")
+    public String getDenyPage() {
+        return "client/auth/deny";
     }
 }
