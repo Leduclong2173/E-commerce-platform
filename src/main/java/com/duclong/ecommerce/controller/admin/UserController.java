@@ -108,4 +108,56 @@ public class UserController {
         this.userService.deleteUserById(user.getUser_id());
         return "redirect:/admin/user";
     }
+
+    @GetMapping("/admin/user/{id}")
+    public String getDetailUserPage(Model model, @PathVariable long id) {
+        User user = this.userService.getUserById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("id", id);
+        return "admin/manageuser/detailUser";
+    }
+
+    @GetMapping("/admin/user/update/{id}")
+    public String getUpdateUserPage(Model model, @PathVariable long id) {
+        User updateUser = this.userService.getUserById(id);
+        model.addAttribute("updateUser", updateUser);
+        return "admin/manageuser/updateUser";
+    }
+    
+    @PostMapping("/admin/user/update")
+    public String postUpdateUser(
+        @Valid @ModelAttribute("updateUser") User user,
+        BindingResult updateUserBindingResult,
+        @RequestParam("avatarFile") MultipartFile file
+        ) {
+        
+        List<FieldError> errors = updateUserBindingResult.getFieldErrors();
+        for (FieldError error : errors ) {
+        System.out.println (error.getField() + " - " + error.getDefaultMessage());
+        }
+
+        // Validate
+         User userByUsername = this.userService.getUserByUsername(user.getUsername());
+        if (userByUsername != null && userByUsername.getUser_id() != userByUsername.getUser_id()) {
+            updateUserBindingResult.rejectValue("email", "error.email", "Email đã tồn tại!");
+        }
+
+        User userByEmail = this.userService.getUserByEmail(user.getEmail());
+        if (userByEmail != null && userByEmail.getUser_id() != userByEmail.getUser_id()) {
+        updateUserBindingResult.rejectValue("email", "error.email", "Email đã tồn tại!");
+        }
+
+        if(updateUserBindingResult.hasErrors()){
+            return "admin/manageuser/updateUser";
+        }
+
+        String avatarName = this.uploadService.handleUploadFile(file, "avatar");
+
+        user.setAvatar(avatarName);
+        user.setRole(this.userService.getRoleByName(user.getRole().getName()));
+
+        this.userService.handleSaveUser(user);
+        return "redirect:/admin/user";
+    }
+    
 }

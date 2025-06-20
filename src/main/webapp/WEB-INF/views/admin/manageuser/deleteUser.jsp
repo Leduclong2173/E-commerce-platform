@@ -6,7 +6,7 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Delete User ${id}</title>
+        <title>Delete</title>
         <link rel="stylesheet" />
         <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>

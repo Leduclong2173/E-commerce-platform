@@ -22,16 +22,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long user_id;
 
+    @NotEmpty(message = "Username is not valid")
     private String username;
 
+    @NotEmpty(message = "Name is not valid")
     private String name;
 
     @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
-    @NotEmpty(message = "Email cannot be empty")
+    @NotNull
     private String email;
 
+    @NotEmpty(message = "Password is not valid")
     private String password;
 
+    @NotEmpty(message = "Phone is not valid")
     private String phone;
     private String address;
     private String avatar;

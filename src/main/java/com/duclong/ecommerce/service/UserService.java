@@ -46,7 +46,16 @@ public class UserService {
     public boolean checkUsernameExist(String username){
         return this.userRepository.existsByUsername(username);
     }
+
     public User getUserByUsername(String username){
         return this.userRepository.findByUsername(username);
+    }
+
+    public User getUserByEmail(String email){
+        return this.userRepository.findByEmail(email);
+    }
+
+    public User getUserById(long id){
+        return this.userRepository.findById(id);
     }
 }
