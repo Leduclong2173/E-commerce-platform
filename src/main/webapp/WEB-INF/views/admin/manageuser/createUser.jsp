@@ -53,14 +53,17 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
                                         class="row"
                                         enctype="multipart/form-data"
                                     >
+                                        <c:set var="errorUsername">
+                                            <form:errors path="username" cssClass="invalid-feedback" />
+                                        </c:set>
+                                        <c:set var="errorPassword">
+                                            <form:errors path="password" cssClass="invalid-feedback" />
+                                        </c:set>
                                         <c:set var="errorName">
                                             <form:errors path="name" cssClass="invalid-feedback" />
                                         </c:set>
                                         <c:set var="errorEmail">
                                             <form:errors path="email" cssClass="invalid-feedback" />
-                                        </c:set>
-                                        <c:set var="errorPassword">
-                                            <form:errors path="password" cssClass="invalid-feedback" />
                                         </c:set>
                                         <c:set var="errorPhone">
                                             <form:errors path="phone" cssClass="invalid-feedback" />
@@ -69,24 +72,14 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
                                             <form:errors path="role.name" cssClass="invalid-feedback" />
                                         </c:set>
                                         <div class="mb-3 col-12 col-md-6">
-                                            <label for="InputName" class="form-label">Name</label>
+                                            <label for="InputUsername" class="form-label">Username</label>
                                             <form:input
                                                 type="text"
-                                                class="form-control ${not empty errorName ? 'is-invalid' : ''}"
-                                                id="InputName"
-                                                path="name"
+                                                class="form-control ${not empty errorUsername ? 'is-invalid' : ''}"
+                                                id="InputUsername"
+                                                path="username"
                                             />
-                                            ${errorName}
-                                        </div>
-                                        <div class="mb-3 col-12 col-md-6">
-                                            <label for="InputEmail" class="form-label">Email</label>
-                                            <form:input
-                                                type="email"
-                                                class="form-control ${not empty errorEmail ? 'is-invalid' : ''}"
-                                                id="InputEmail"
-                                                path="email"
-                                            />
-                                            ${errorEmail}
+                                            ${errorUsername}
                                         </div>
                                         <div class="mb-3 col-12 col-md-6">
                                             <label for="InputPassword" class="form-label">Password</label>
@@ -97,6 +90,35 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
                                                 path="password"
                                             />
                                             ${errorPassword}
+                                        </div>
+                                        <div class="mb-3 col-12 col-md-6">
+                                            <label for="InputName" class="form-label">Name</label>
+                                            <form:input
+                                                type="text"
+                                                class="form-control ${not empty errorName ? 'is-invalid' : ''}"
+                                                id="InputEmail"
+                                                path="name"
+                                            />
+                                            ${errorName}
+                                        </div>
+                                        <div class="mb-3 col-12 col-md-6">
+                                            <label class="form-label">Role</label>
+                                            <form:select class="form-select ${not empty errorRole ? 'is-invalid' : ''}" path="role.name">
+                                                <form:option value="">-- Select Role --</form:option>
+                                                <form:option value="ADMIN">ADMIN</form:option>
+                                                <form:option value="USER">USER</form:option>
+                                                <form:option value="SELLER">SELLER</form:option>
+                                            </form:select>
+                                        </div>
+                                        <div class="mb-3 col-12 col-md-6">
+                                            <label for="InputEmail" class="form-label">Email</label>
+                                            <form:input
+                                                type="email"
+                                                class="form-control ${not empty errorEmail ? 'is-invalid' : ''}"
+                                                id="InputEmail"
+                                                path="email"
+                                            />
+                                            ${errorEmail}
                                         </div>
                                         <div class="mb-3 col-12 col-md-6">
                                             <label for="InputPhone" class="form-label">Phone</label>
@@ -111,15 +133,6 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
                                         <div class="mb-3 col-12">
                                             <label for="InputAddress" class="form-label">Address</label>
                                             <form:input type="text" class="form-control" id="InputAddress" path="address" />
-                                        </div>
-                                        <div class="mb-3 col-12 col-md-6">
-                                            <label class="form-label">Role</label>
-                                            <form:select class="form-select ${not empty errorRole ? 'is-invalid' : ''}" path="role.name">
-                                                <form:option value="">-- Select Role --</form:option>
-                                                <form:option value="ADMIN">ADMIN</form:option>
-                                                <form:option value="USER">USER</form:option>
-                                                <form:option value="SELLER">SELLER</form:option>
-                                            </form:select>
                                         </div>
                                         <div class="mb-3 col-12 col-md-6">
                                             <label for="avatarFile" class="form-label">Avatar</label>

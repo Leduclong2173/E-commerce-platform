@@ -22,17 +22,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long user_id;
 
-    @NotNull
+    private String username;
+
     private String name;
 
     @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     @NotEmpty(message = "Email cannot be empty")
     private String email;
 
-    @NotNull
     private String password;
 
-    @NotNull
     private String phone;
     private String address;
     private String avatar;
@@ -56,6 +55,14 @@ public class User {
 
     public void setUser_id(long user_id) {
         this.user_id = user_id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getName() {
@@ -140,10 +147,10 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [user_id=" + user_id + ", name=" + name + ", email=" + email + ", password=" + password
-                + ", phone=" + phone + ", address=" + address + ", avatar=" + avatar + ", role=" + role + ", cart="
-                + cart + ", products=" + products + ", orders=" + orders + "]";
+        return "User [user_id=" + user_id + ", username=" + username + ", name=" + name + ", email=" + email
+                + ", password=" + password + ", phone=" + phone + ", address=" + address + ", avatar=" + avatar
+                + ", role=" + role + ", cart=" + cart + ", products=" + products + ", orders=" + orders + "]";
     }
-
+    
     
 }

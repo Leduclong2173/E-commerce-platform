@@ -7,9 +7,7 @@ import org.springframework.context.ApplicationListener;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
-// @SpringBootApplication
-// Temporarily disable Spring Security
-@SpringBootApplication(exclude = org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class)
+@SpringBootApplication
 public class EcommerceApplication {
 
 	public static void main(String[] args) {

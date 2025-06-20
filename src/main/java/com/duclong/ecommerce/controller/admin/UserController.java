@@ -62,7 +62,7 @@ public class UserController {
     
     @PostMapping("/admin/user/create")
     public String postCreateUser(
-        @ModelAttribute("newUser") @Valid User user,
+        @Valid @ModelAttribute("newUser") User user,
         BindingResult newUserBindingResult,
         @RequestParam("avatarFile") MultipartFile file
         ) {
@@ -73,9 +73,18 @@ public class UserController {
         }
 
         // Validate
+        if (this.userService.checkUsernameExist(user.getUsername())) {
+        newUserBindingResult.rejectValue("username", "error.username", "Username đã tồn tại!");
+        }
+
+        if (this.userService.checkEmailExist(user.getEmail())) {
+        newUserBindingResult.rejectValue("email", "error.email", "Email đã tồn tại!");
+        }
+
         if(newUserBindingResult.hasErrors()){
             return "admin/manageuser/createUser";
         }
+
         String avatarName = this.uploadService.handleUploadFile(file, "avatar");
         String hashPassword = this.passwordEncoder.encode(user.getPassword());
 

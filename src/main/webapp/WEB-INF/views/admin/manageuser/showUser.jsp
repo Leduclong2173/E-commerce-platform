@@ -36,8 +36,8 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
+                                                <th>Username</th>
                                                 <th>Name</th>
-                                                <th>Email</th>
                                                 <th>Role</th>
                                                 <th>Action</th>
                                             </tr>
@@ -46,8 +46,8 @@
                                             <c:forEach var="user" items="${users}">
                                                 <tr>
                                                     <th>${user.user_id}</th>
+                                                    <td>${user.username}</td>
                                                     <td>${user.name}</td>
-                                                    <td>${user.email}</td>
                                                     <td>${user.role.name}</td>
                                                     <td>
                                                         <a href="/admin/user/${user.user_id}" class="btn btn-success">View</a>
