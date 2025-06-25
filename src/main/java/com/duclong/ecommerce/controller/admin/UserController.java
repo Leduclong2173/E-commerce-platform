@@ -53,6 +53,13 @@ public class UserController {
         model.addAttribute("users", users);
         return "admin/manageuser/showUser";
     }
+
+    @GetMapping("/admin/user/search")
+    public String getsearchUser(@RequestParam("keyword") String keyword, Model model) {
+        List<User> users = userService.searchByUsernameOrId(keyword);
+        model.addAttribute("users", users);
+        return "admin/manageuser/showUser";
+    }
     
     @GetMapping("/admin/user/create")
     public String getCreateUserPage(Model model) {

@@ -13,8 +13,6 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -23,7 +21,7 @@ import jakarta.validation.constraints.Size;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long user_id;
+    private Long user_id;
 
     @NotBlank(message = "Username cannot be empty")
     @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters")
@@ -60,11 +58,11 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
 
-    public long getUser_id() {
+    public Long getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(long user_id) {
+    public void setUser_id(Long user_id) {
         this.user_id = user_id;
     }
 

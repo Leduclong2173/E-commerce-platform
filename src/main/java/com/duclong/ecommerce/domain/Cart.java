@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long cart_id;
+    private Long cart_id;
 
     private int sum;
 
@@ -27,11 +27,11 @@ public class Cart {
     @OneToMany(mappedBy = "cart")
     private List<CartItem> cartItems;
 
-    public long getCart_id() {
+    public Long getCart_id() {
         return cart_id;
     }
 
-    public void setCart_id(long cart_id) {
+    public void setCart_id(Long cart_id) {
         this.cart_id = cart_id;
     }
 

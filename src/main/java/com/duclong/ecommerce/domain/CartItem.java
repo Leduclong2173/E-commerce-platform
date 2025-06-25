@@ -13,9 +13,9 @@ import jakarta.persistence.Table;
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long cart_item_id;
+    private Long cart_item_id;
 
-    private long quantity;
+    private Long quantity;
 
     private double price;
 
@@ -27,19 +27,19 @@ public class CartItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public long getCart_item_id() {
+    public Long getCart_item_id() {
         return cart_item_id;
     }
 
-    public void setCart_item_id(long cart_item_id) {
+    public void setCart_item_id(Long cart_item_id) {
         this.cart_item_id = cart_item_id;
     }
 
-    public long getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(long quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 

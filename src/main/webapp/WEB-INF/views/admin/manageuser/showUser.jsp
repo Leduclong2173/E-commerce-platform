@@ -29,7 +29,20 @@
                                 <div class="col-12 mx-auto">
                                     <div class="d-flex justify-content-between">
                                         <h3>Table user</h3>
-                                        <a href="/admin/user/create" class="btn btn-primary">Create a user</a>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <!-- Search Form -->
+                                            <form action="/admin/user/search" method="GET" class="d-flex" style="flex-grow: 1; max-width: 500px">
+                                                <input
+                                                    type="text"
+                                                    name="keyword"
+                                                    class="form-control me-2"
+                                                    placeholder="Search by Username or ID"
+                                                    value="${param.keyword}"
+                                                />
+                                                <button type="submit" class="btn btn-outline-primary">Search</button>
+                                            </form>
+                                            <a href="/admin/user/create" class="btn btn-primary ms-3">Create a user</a>
+                                        </div>
                                     </div>
                                     <hr />
                                     <table class="table table-bordered table-hover">

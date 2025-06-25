@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long role_id;
+    private Long role_id;
 
     private String name;
 
@@ -23,11 +23,11 @@ public class Role {
     @OneToMany(mappedBy = "role")
     private List<User> users;
 
-    public long getRole_id() {
+    public Long getRole_id() {
         return role_id;
     }
 
-    public void setRole_id(long role_id) {
+    public void setRole_id(Long role_id) {
         this.role_id = role_id;
     }
 

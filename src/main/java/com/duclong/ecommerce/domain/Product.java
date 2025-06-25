@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long product_id;
+    private Long product_id;
 
     private String name;
 
@@ -30,7 +30,7 @@ public class Product {
 
     private String image;
 
-    private long stock;
+    private Long stock;
 
     @OneToMany(mappedBy = "product")
     private List<CartItem> cartItems;
@@ -42,11 +42,11 @@ public class Product {
     @JoinColumn(name = "seller_id")
     private User user;
 
-    public long getProduct_id() {
+    public Long getProduct_id() {
         return product_id;
     }
 
-    public void setProduct_id(long product_id) {
+    public void setProduct_id(Long product_id) {
         this.product_id = product_id;
     }
 
@@ -90,11 +90,11 @@ public class Product {
         this.image = image;
     }
 
-    public long getStock() {
+    public Long getStock() {
         return stock;
     }
 
-    public void setStock(long stock) {
+    public void setStock(Long stock) {
         this.stock = stock;
     }
 

@@ -13,9 +13,9 @@ import jakarta.persistence.Table;
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long order_item_id;
+    private Long order_item_id;
 
-    private long quantity;
+    private Long quantity;
 
     private double price;
 
@@ -27,19 +27,19 @@ public class OrderItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public long getOrder_item_id() {
+    public Long getOrder_item_id() {
         return order_item_id;
     }
 
-    public void setOrder_item_id(long order_item_id) {
+    public void setOrder_item_id(Long order_item_id) {
         this.order_item_id = order_item_id;
     }
 
-    public long getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(long quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 

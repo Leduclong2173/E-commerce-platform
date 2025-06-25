@@ -58,4 +58,16 @@ public class UserService {
     public User getUserById(long id){
         return this.userRepository.findById(id);
     }
+
+    public List<User> searchByUsernameOrId(String keyword) {
+        if (keyword == null){
+            return getAllUser();
+        }
+        Long id = null;
+        try {
+            id = Long.parseLong(keyword);
+        } catch (NumberFormatException e) {
+        }
+        return userRepository.searchByUsernameOrId(keyword, id);
+    }
 }

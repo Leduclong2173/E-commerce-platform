@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long order_id;
+    private Long order_id;
 
     private double totalPrice;
 
@@ -32,11 +32,11 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
 
-    public long getOrder_id() {
+    public Long getOrder_id() {
         return order_id;
     }
 
-    public void setOrder_id(long order_id) {
+    public void setOrder_id(Long order_id) {
         this.order_id = order_id;
     }
 
