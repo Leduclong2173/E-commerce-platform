@@ -8,5 +8,5 @@ import com.duclong.ecommerce.domain.User;
 
 @Repository
 public interface CartRepository extends JpaRepository<Cart, Long>{
-    Cart findCartByUser(User user);  
+    Cart findByUser(User user);  
 }

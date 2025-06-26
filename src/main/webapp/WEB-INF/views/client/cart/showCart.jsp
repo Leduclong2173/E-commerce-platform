@@ -72,33 +72,32 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:if test="${ empty cartDetails}">
+                                        <c:if test="${ empty cartItems}">
                                             <tr>
                                                 <td colspan="6">
                                                     Không có sản phẩm trong giỏ hàng
                                                 </td>
                                             </tr>
                                         </c:if>
-                                        <c:forEach var="cartDetail" items="${cartDetails}" varStatus="status">
-
+                                        <c:forEach var="cartItem" items="${cartItems}" varStatus="status">
                                             <tr>
                                                 <th scope="row">
                                                     <div class="d-flex align-items-center">
-                                                        <img src="/images/product/${cartDetail.product.image}"
+                                                        <img src="/images/product/${cartItem.product.image}"
                                                             class="img-fluid me-5 rounded-circle"
                                                             style="width: 80px; height: 80px;" alt="">
                                                     </div>
                                                 </th>
                                                 <td>
                                                     <p class="mb-0 mt-4">
-                                                        <a href="/product/${cartDetail.product.id}" target="_blank">
-                                                            ${cartDetail.product.name}
+                                                        <a href="/product/${cartItem.product.product_id}" target="_blank">
+                                                            ${cartItem.product.name}
                                                         </a>
                                                     </p>
                                                 </td>
                                                 <td>
                                                     <p class="mb-0 mt-4">
-                                                        <fmt:formatNumber type="number" value="${cartDetail.price}" /> đ
+                                                        <fmt:formatNumber type="number" value="${cartItem.price}" /> đ
                                                     </p>
                                                 </td>
                                                 <td>
@@ -111,9 +110,9 @@
                                                         </div>
                                                         <input type="text"
                                                             class="form-control form-control-sm text-center border-0"
-                                                            value="${cartDetail.quantity}"
-                                                            data-cart-detail-id="${cartDetail.id}"
-                                                            data-cart-detail-price="${cartDetail.price}"
+                                                            value="${cartItem.quantity}"
+                                                            data-cart-detail-id="${cartItem.cart_item_id}"
+                                                            data-cart-detail-price="${cartItem.price}"
                                                             data-cart-detail-index="${status.index}">
                                                         <div class="input-group-btn">
                                                             <button
@@ -124,13 +123,13 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <p class="mb-0 mt-4" data-cart-detail-id="${cartDetail.id}">
+                                                    <p class="mb-0 mt-4" data-cart-detail-id="${cartItem.cart_item_id}">
                                                         <fmt:formatNumber type="number"
-                                                            value="${cartDetail.price * cartDetail.quantity}" /> đ
+                                                            value="${cartItem.price * cartItem.quantity}" /> đ
                                                     </p>
                                                 </td>
                                                 <td>
-                                                    <form method="post" action="/delete-cart-product/${cartDetail.id}">
+                                                    <form method="post" action="/delete-cart-product/${cartItem.cart_item_id}">
                                                         <input type="hidden" name="${_csrf.parameterName}"
                                                             value="${_csrf.token}" />
                                                         <button class="btn btn-md rounded-circle bg-light border mt-4">
@@ -140,11 +139,10 @@
                                                 </td>
                                             </tr>
                                         </c:forEach>
-
                                     </tbody>
                                 </table>
                             </div>
-                            <c:if test="${not empty cartDetails}">
+                            <c:if test="${not empty cartItems}">
                                 <div class="mt-5 row g-4 justify-content-start">
                                     <div class="col-12 col-md-8">
                                         <div class="bg-light rounded">
@@ -176,20 +174,20 @@
                                                 <input type="hidden" name="${_csrf.parameterName}"
                                                     value="${_csrf.token}" />
                                                 <div style="display: none;">
-                                                    <c:forEach var="cartDetail" items="${cart.cartDetails}"
+                                                    <c:forEach var="cartItem" items="${cart.cartItems}"
                                                         varStatus="status">
                                                         <div class="mb-3">
                                                             <div class="form-group">
                                                                 <label>Id:</label>
                                                                 <form:input class="form-control" type="text"
-                                                                    value="${cartDetail.id}"
-                                                                    path="cartDetails[${status.index}].id" />
+                                                                    value="${cartItem.cart_item_id}"
+                                                                    path="cartItems[${status.index}].id" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label>Quantity:</label>
                                                                 <form:input class="form-control" type="text"
-                                                                    value="${cartDetail.quantity}"
-                                                                    path="cartDetails[${status.index}].quantity" />
+                                                                    value="${cartItem.quantity}"
+                                                                    path="cartItems[${status.index}].quantity" />
                                                             </div>
                                                         </div>
                                                     </c:forEach>
