@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.duclong.ecommerce.domain.Product;
 import com.duclong.ecommerce.domain.Role;
 import com.duclong.ecommerce.domain.User;
+import com.duclong.ecommerce.repository.ProductRepository;
 import com.duclong.ecommerce.repository.RoleRepository;
 import com.duclong.ecommerce.repository.UserRepository;
 
@@ -14,13 +16,16 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final ProductRepository productRepository;
 
     public UserService(
         UserRepository userRepository,
-        RoleRepository roleRepository
+        RoleRepository roleRepository,
+        ProductRepository productRepository
     ){
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.productRepository = productRepository;
     }
 
     public List<User> getAllUser(){
@@ -71,7 +76,4 @@ public class UserService {
         return userRepository.searchByUsernameOrId(keyword, id);
     }
 
-    // public User getUserByUser(User user){
-    //     return this.userRepository.findByUser(user);
-    // }
 }

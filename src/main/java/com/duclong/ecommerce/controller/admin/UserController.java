@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.duclong.ecommerce.domain.Product;
 import com.duclong.ecommerce.domain.User;
+import com.duclong.ecommerce.service.ProductServices;
 import com.duclong.ecommerce.service.UploadService;
 import com.duclong.ecommerce.service.UserService;
 
@@ -36,15 +38,18 @@ public class UserController {
     private final UserService userService;
     private final UploadService uploadService;
     private final PasswordEncoder passwordEncoder;
+    private final ProductServices productServices;
 
     public UserController (
         UserService userService,
         UploadService uploadService,
-        PasswordEncoder passwordEncoder
+        PasswordEncoder passwordEncoder,
+        ProductServices productServices
     ){
         this.userService = userService;
         this.uploadService = uploadService;
         this.passwordEncoder = passwordEncoder;
+        this.productServices = productServices;
     }
 
     @GetMapping("/admin/user")
@@ -167,4 +172,26 @@ public class UserController {
         return "redirect:/admin/user";
     }
     
+    @GetMapping("/admin/user/viewshop/{id}")
+    public String getViewShopPage(Model model, @PathVariable long id) {
+        User user = this.userService.getUserById(id);
+        List<Product> products = this.productServices.getAllProductByUser(user);
+        model.addAttribute("products", products);
+        return "admin/manageuser/viewShop";
+    }
+
+    @GetMapping("/admin/user/viewshop/search")
+    public String getsearchProduct(@RequestParam("keyword") String keyword, Model model) {
+        List<Product> products = this.productServices.searchByNameOrId(keyword);
+        model.addAttribute("products", products);
+        return "admin/manageuser/viewShop";
+    }
+
+    @GetMapping("/admin/user/viewshopdetail/{id}")
+    public String getViewShopDetailPage(Model model, @PathVariable long id) {
+        Product product = this.productServices.getProductById(id);
+        model.addAttribute("product", product);
+        model.addAttribute("id", id);
+        return "admin/manageuser/viewShopDetail";
+    }
 }

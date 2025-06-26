@@ -11,6 +11,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "products")
@@ -19,8 +23,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long product_id;
 
+    @NotBlank(message = "Name cannot be empty")
+    @Size(min = 2, max = 255, message = "Name must be between 2 and 255 characters")
     private String name;
 
+    @NotNull(message = "Price cannot be empty")
+    @Positive(message = "Price must be greater than 0")
     private double price;
 
     private String shortDesc;
@@ -30,6 +38,8 @@ public class Product {
 
     private String image;
 
+    @NotNull(message = "Stock cannot be empty")
+    @Positive(message = "Stock must be greater than 0")
     private Long stock;
 
     @OneToMany(mappedBy = "product")
