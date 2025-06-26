@@ -1,5 +1,6 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" %> <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ taglib prefix="fmt"
-uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +27,16 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
         <!-- Template Stylesheet -->
         <link href="/client/css/style.css" rel="stylesheet" />
 
+        <!-- Custom CSS for uniform image size -->
+        <style>
+            .fruite-img img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                display: block;
+            }
+        </style>
+
         <meta name="_csrf" content="${_csrf.token}" />
         <!-- default header name is X-CSRF-TOKEN -->
         <meta name="_csrf_header" content="${_csrf.headerName}" />
@@ -33,7 +44,6 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet" />
     </head>
     <body>
-        This is HomePage
         <!-- Spinner Start -->
         <div
             id="spinner"
@@ -45,6 +55,72 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
         <jsp:include page="layout/header.jsp" />
 
         <jsp:include page="layout/feature.jsp" />
+
+        <div class="container-fluid fruite">
+            <div class="container py-5">
+                <div class="tab-class text-center">
+                    <div class="row g-4">
+                        <div class="text-start">
+                            <h1 style="text-align: center">Sản phẩm</h1>
+                        </div>
+                    </div>
+                    <div class="tab-content mt-3">
+                        <div id="tab-1" class="tab-pane fade show p-0 active">
+                            <div class="row g-4">
+                                <div class="col-lg-12">
+                                    <c:choose>
+                                        <c:when test="${not empty users}">
+                                            <c:forEach var="user" items="${users}">
+                                                <c:if test="${not empty user.products}">
+                                                    <div class="row g-4 mb-4">
+                                                        <div class="col-12">
+                                                            <h3 class="text-start">${user.name}</h3>
+                                                            <hr />
+                                                        </div>
+                                                        <c:forEach var="product" items="${user.products}">
+                                                            <div class="col-md-6 col-lg-4 col-xl-3">
+                                                                <div class="rounded position-relative fruite-item">
+                                                                    <div class="fruite-img">
+                                                                        <img src="/images/product/${product.image}" class="img-fluid rounded-top" alt="">
+                                                                    </div>
+                                                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                                        <h4 style="font-size: 15px;">
+                                                                            <a href="/product/${product.product_id}">${product.name}</a>
+                                                                        </h4>
+                                                                        <p style="font-size: 13px;">${product.shortDesc}</p>
+                                                                        <div class="d-flex flex-lg-wrap justify-content-center flex-column">
+                                                                            <p style="font-size: 15px; text-align: center; width: 100%;" class="text-dark fw-bold mb-3">
+                                                                                <fmt:formatNumber type="number" value="${product.price}" /> đ
+                                                                            </p>
+                                                                                <form action="/add-product-to-cart/${product.product_id}" method="post">
+                                                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                                                                    <button data-product-id="${product.product_id}" class="btnAddToCartHomepage mx-auto btn border border-secondary rounded-pill px-3 text-primary">
+                                                                                        <i class="fa fa-shopping-bag me-2 text-primary"></i>
+                                                                                        Add to cart
+                                                                                    </button>
+                                                                                </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </c:forEach>
+                                                    </div>
+                                                </c:if>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div class="alert alert-warning text-center" role="alert">
+                                                No products available from any shop.
+                                            </div>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <jsp:include page="layout/footer.jsp" />
         <!-- Back to Top -->
