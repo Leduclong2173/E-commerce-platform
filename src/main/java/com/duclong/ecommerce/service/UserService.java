@@ -70,4 +70,8 @@ public class UserService {
         }
         return userRepository.searchByUsernameOrId(keyword, id);
     }
+
+    // public User getUserByUser(User user){
+    //     return this.userRepository.findByUser(user);
+    // }
 }

@@ -12,7 +12,7 @@
                     Dashboard
                 </a>
 
-                <a class="nav-link" href="/client/user">
+                <a class="nav-link" href="/client/information">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>

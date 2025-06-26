@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -12,12 +13,18 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.duclong.ecommerce.domain.User;
+import com.duclong.ecommerce.service.UserService;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 public class CustomSuccessHandle implements AuthenticationSuccessHandler{
+
+    @Autowired
+    private UserService userService;
 
     protected String determineTargetUrl(final Authentication authentication) {
 
@@ -36,12 +43,21 @@ public class CustomSuccessHandle implements AuthenticationSuccessHandler{
         throw new IllegalStateException();
     }
 
-    protected void clearAuthenticationAttributes(HttpServletRequest request) {
+    protected void clearAuthenticationAttributes(HttpServletRequest request, Authentication authentication) {
         HttpSession session = request.getSession(false);
         if (session == null) {
             return;
         }
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+        // Get username
+        String username = authentication.getName();
+        // Query user
+        User user = this.userService.getUserByUsername(username);
+        if(user != null){
+            session.setAttribute("user_id", user.getUser_id());
+            session.setAttribute("username", user.getUsername());
+            session.setAttribute("avatar", user.getAvatar());
+        }  
     }
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
@@ -57,7 +73,7 @@ public class CustomSuccessHandle implements AuthenticationSuccessHandler{
         }
 
         redirectStrategy.sendRedirect(request, response, targetUrl);
-        clearAuthenticationAttributes(request);
+        clearAuthenticationAttributes(request, authentication);
     }
     
 }
