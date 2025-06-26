@@ -89,20 +89,12 @@ public class HomePageController {
         return "client/cart/showCart";
     }
 
-    // @PostMapping("/delete-cart-product/{id}")
-    // public String postDeleteCartItem(@PathVariable Long id, HttpServletRequest request) {
-    //     HttpSession session = request.getSession(false);
-    //     Long cartItemId = id;
-    //     this.cartService.handleRemoveCartItem(cartItemId, session);
-    //     return "redirect:/cart";
-    // }
-
     @PostMapping("/delete-cart-product/{id}")
-    public String deleteCartDetail(@PathVariable long id, HttpServletRequest request) {
+    public String postDeleteCartItem(@PathVariable Long id, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-        long cartDetailId = id;
-        this.cartService.handleRemoveCartItem(cartDetailId, session);
-        
+        Long cartItemId = id;
+        this.cartService.handleRemoveCartItem(cartItemId, session);
         return "redirect:/cart";
-    } 
+    }
+
 }

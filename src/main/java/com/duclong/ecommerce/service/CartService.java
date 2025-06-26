@@ -81,7 +81,7 @@ public class CartService {
         return this.cartRepository.findByUser(user);
     }
 
-    public void handleRemoveCartItem(long cartItemId, HttpSession session) {
+    public void handleRemoveCartItem(Long cartItemId, HttpSession session) {
         Optional<CartItem> cartItemOptional = this.cartItemRepository.findById(cartItemId);
         if (cartItemOptional.isPresent()) {
             CartItem cartItem = cartItemOptional.get();
