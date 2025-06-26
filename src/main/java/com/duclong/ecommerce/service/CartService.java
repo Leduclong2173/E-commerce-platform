@@ -76,22 +76,19 @@ public class CartService {
 
     public void handleRemoveCartItem(Long cartItemId, HttpSession session) {
         Optional<CartItem> cartItemOptional = this.cartItemRepository.findById(cartItemId);
-        if (cartItemOptional.isPresent()) {
+        if (cartItemOptional.isPresent()){
             CartItem cartItem = cartItemOptional.get();
 
             Cart currentCart = cartItem.getCart();
-            // delete cart-Item
+
             this.cartItemRepository.deleteById(cartItemId);
 
-            // update cart
-            if (currentCart.getSum() > 1) {
-                // update current cart
-                int s = currentCart.getSum() - 1;
-                currentCart.setSum(s);
-                session.setAttribute("sum", s);
+            if (currentCart.getSum() > 1){
+                int sum = currentCart.getSum() - 1;
+                currentCart.setSum(sum);
+                session.setAttribute("sum", sum);
                 this.cartRepository.save(currentCart);
             } else {
-                // delete cart (sum = 1)
                 this.cartRepository.deleteById(currentCart.getCart_id());
                 session.setAttribute("sum", 0);
             }

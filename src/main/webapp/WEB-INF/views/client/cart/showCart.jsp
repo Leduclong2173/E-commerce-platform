@@ -111,6 +111,7 @@
                                                         <input type="text"
                                                             class="form-control form-control-sm text-center border-0"
                                                             value="${cartItem.quantity}"
+                                                            data-cart-detail-stock ="${cartItem.product.stock}"
                                                             data-cart-detail-id="${cartItem.cart_item_id}"
                                                             data-cart-detail-price="${cartItem.price}"
                                                             data-cart-detail-index="${status.index}">
