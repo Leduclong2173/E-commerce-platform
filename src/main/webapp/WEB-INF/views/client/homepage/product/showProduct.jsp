@@ -67,27 +67,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
                                 <p class="mb-3">Kho: ${product.stock}</p>
                                 <h5 class="fw-bold mb-3"><fmt:formatNumber type="number" value="${product.price}" /> đ</h5>
                                 <p class="mb-4">${product.shortDesc}</p>
-                                <div class="input-group quantity mb-4" style="width: 100px">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input
-                                        type="text"
-                                        class="form-control form-control-sm text-center border-0"
-                                        value="1"
-                                        data-cart-detail-index="0"
-                                        data-stock="${product.stock}"
-                                        readonly
-                                    />
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <form action="/add-product-from-view-detail" method="post" modelAttribute="product">
+                                <form action="/add-product-to-cart/${product.product_id}" method="post" modelAttribute="product">
                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                     <input class="form-control d-none" type="text" value="${product.product_id}" name="id" />
                                     <input class="form-control d-none" type="text" name="quantity" id="cartDetails0.quantity" value="1" />

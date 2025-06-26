@@ -77,7 +77,7 @@ public class UserService {
     }
 
     public List<User> searchUsersAndProducts(String keyword) {
-        return userRepository.findByNameContainingIgnoreCaseOrProductsNameContainingIgnoreCase(keyword, keyword);
+        return userRepository.findByNameContainingIgnoreCaseOrProductsNameContainingIgnoreCase(keyword);
     }
 
 }

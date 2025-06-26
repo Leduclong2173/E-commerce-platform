@@ -73,8 +73,10 @@ public class HomePageController {
     
     @GetMapping("/homepage/search")
     public String searchProducts(@RequestParam String keyword, Model model) {
+        List<Product> products = this.productServices.searchByNameOrId(keyword);
         List<User> users = this.userService.searchUsersAndProducts(keyword);
         List<Product> relatedProducts = this.productServices.getRelatedProducts(keyword);
+        model.addAttribute("products", products);
         model.addAttribute("users", users);
         model.addAttribute("relatedProducts", relatedProducts);
         return "client/homepage/product/searchResult";
