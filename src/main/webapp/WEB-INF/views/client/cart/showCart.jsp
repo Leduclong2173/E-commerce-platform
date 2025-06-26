@@ -174,7 +174,7 @@
                                             <form:form action="/confirm-checkout" method="post" modelAttribute="cart">
                                                 <input type="hidden" name="${_csrf.parameterName}"
                                                     value="${_csrf.token}" />
-                                                <div style="display: none;">
+                                                <div style="display: block;">
                                                     <c:forEach var="cartItem" items="${cart.cartItems}"
                                                         varStatus="status">
                                                         <div class="mb-3">

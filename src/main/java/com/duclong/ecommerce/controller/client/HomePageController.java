@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.duclong.ecommerce.domain.Cart;
 import com.duclong.ecommerce.domain.CartItem;
+import com.duclong.ecommerce.domain.Product;
 import com.duclong.ecommerce.domain.User;
 import com.duclong.ecommerce.service.CartService;
 import com.duclong.ecommerce.service.ProductServices;
@@ -19,6 +20,8 @@ import com.duclong.ecommerce.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Controller
@@ -57,7 +60,26 @@ public class HomePageController {
         model.addAttribute("users", usersWithProducts);
         return "client/homepage/showHomePage";
     }
+
+    @GetMapping("homepage/product/{id}")
+    public String getProductPage(@PathVariable Long id, Model model) {
+        Product product = this.productServices.getProductById(id);
+        User user = product.getUser();
+        List<Product> products = user.getProducts();
+        model.addAttribute("product", product);
+        model.addAttribute("products", products);
+        return "client/homepage/product/showProduct";
+    }
     
+    @GetMapping("/homepage/search")
+    public String searchProducts(@RequestParam String keyword, Model model) {
+        List<User> users = this.userService.searchUsersAndProducts(keyword);
+        List<Product> relatedProducts = this.productServices.getRelatedProducts(keyword);
+        model.addAttribute("users", users);
+        model.addAttribute("relatedProducts", relatedProducts);
+        return "client/homepage/product/searchResult";
+    }
+
     @PostMapping("/add-product-to-cart/{id}")
     public String postAddProductToCart(@PathVariable Long id, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
@@ -85,6 +107,7 @@ public class HomePageController {
 
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("totalPrice", totalPrice);
+
 
         return "client/cart/showCart";
     }

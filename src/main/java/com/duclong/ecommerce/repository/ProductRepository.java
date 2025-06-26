@@ -25,4 +25,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM Product p WHERE p.name LIKE %:keyword% OR p.product_id = :id")
     List<Product> searchByNameOrId(@Param("keyword") String keyword, @Param("id") Long id);
+
+    List<Product> findTop4ByNameNotContainingIgnoreCase(String keyword);
 }

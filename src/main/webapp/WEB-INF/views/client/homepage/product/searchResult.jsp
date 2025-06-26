@@ -1,13 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>HomePage</title>
+        <title>Kết quả tìm kiếm</title>
         <!-- Google Web Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -38,30 +37,25 @@
         </style>
 
         <meta name="_csrf" content="${_csrf.token}" />
-        <!-- default header name is X-CSRF-TOKEN -->
         <meta name="_csrf_header" content="${_csrf.headerName}" />
 
         <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet" />
     </head>
     <body>
         <!-- Spinner Start -->
-        <div
-            id="spinner"
-            class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50 d-flex align-items-center justify-content-center"
-        >
+        <div id="spinner"
+             class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-grow text-primary" role="status"></div>
         </div>
         <!-- Spinner End -->
-        <jsp:include page="layout/header.jsp" />
+        <jsp:include page="../layout/header.jsp" />
 
-        <jsp:include page="layout/feature.jsp" />
-
-        <div class="container-fluid fruite">
-            <div class="container py-5">
+        <div class="container-fluid fruite" style="margin-top: 100px;">
+            <div class="container py-4">
                 <div class="tab-class text-center">
                     <div class="row g-4">
                         <div class="text-start">
-                            <h1 style="text-align: center">Sản phẩm</h1>
+                            <h1 style="text-align: center">Kết quả tìm kiếm cho: ${param.keyword}</h1>
                         </div>
                     </div>
                     <div class="tab-content mt-3">
@@ -81,7 +75,7 @@
                                                             <div class="col-md-6 col-lg-4 col-xl-3">
                                                                 <div class="rounded position-relative fruite-item">
                                                                     <div class="fruite-img">
-                                                                        <img src="/images/product/${product.image}" class="img-fluid rounded-top" alt="">
+                                                                        <img src="/images/product/${product.image}" class="img-fluid rounded-top" alt="${product.name}">
                                                                     </div>
                                                                     <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                                         <h4 style="font-size: 15px;">
@@ -92,13 +86,14 @@
                                                                             <p style="font-size: 15px; text-align: center; width: 100%;" class="text-dark fw-bold mb-3">
                                                                                 <fmt:formatNumber type="number" value="${product.price}" /> đ
                                                                             </p>
-                                                                                <form action="/add-product-to-cart/${product.product_id}" method="post">
-                                                                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                                                                    <button data-product-id="${product.product_id}" class="btnAddToCartHomepage mx-auto btn border border-secondary rounded-pill px-3 text-primary">
-                                                                                        <i class="fa fa-shopping-bag me-2 text-primary"></i>
-                                                                                        Add to cart
-                                                                                    </button>
-                                                                                </form>
+                                                                            <form action="/add-product-to-cart/${product.product_id}" method="post">
+                                                                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                                                                <input type="hidden" name="quantity" value="1" />
+                                                                                <button data-product-id="${product.product_id}" data-stock="${product.stock}" class="btnAddToCartHomepage mx-auto btn border border-secondary rounded-pill px-3 text-primary">
+                                                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i>
+                                                                                    Add to cart
+                                                                                </button>
+                                                                            </form>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -110,19 +105,56 @@
                                         </c:when>
                                         <c:otherwise>
                                             <div class="alert alert-warning text-center" role="alert">
-                                                No products available from any shop.
+                                                Không tìm thấy sản phẩm hoặc cửa hàng nào khớp với từ khóa "${param.keyword}".
                                             </div>
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
                             </div>
+                            <!-- Sản phẩm liên quan -->
+                            <c:if test="${not empty relatedProducts}">
+                                <div class="row g-4 mt-4">
+                                    <div class="col-12">
+                                        <h3 class="text-start">Sản phẩm liên quan</h3>
+                                        <hr />
+                                    </div>
+                                    <c:forEach var="relatedProduct" items="${relatedProducts}" varStatus="status" begin="0" end="3">
+                                        <div class="col-md-6 col-lg-4 col-xl-3">
+                                            <div class="rounded position-relative fruite-item">
+                                                <div class="fruite-img">
+                                                    <img src="/images/product/${relatedProduct.image}" class="img-fluid rounded-top" alt="${relatedProduct.name}">
+                                                </div>
+                                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                    <h4 style="font-size: 15px;">
+                                                        <a href="/homepage/product/${relatedProduct.product_id}">${relatedProduct.name}</a>
+                                                    </h4>
+                                                    <p style="font-size: 13px;">${relatedProduct.shortDesc}</p>
+                                                    <div class="d-flex flex-lg-wrap justify-content-center flex-column">
+                                                        <p style="font-size: 15px; text-align: center; width: 100%;" class="text-dark fw-bold mb-3">
+                                                            <fmt:formatNumber type="number" value="${relatedProduct.price}" /> đ
+                                                        </p>
+                                                        <form action="/add-product-to-cart/${relatedProduct.product_id}" method="post">
+                                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                                            <input type="hidden" name="quantity" value="1" />
+                                                            <button data-product-id="${relatedProduct.product_id}" data-stock="${relatedProduct.stock}" class="btnAddToCartHomepage mx-auto btn border border-secondary rounded-pill px-3 text-primary">
+                                                                <i class="fa fa-shopping-bag me-2 text-primary"></i>
+                                                                Add to cart
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </c:if>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <jsp:include page="layout/footer.jsp" />
+        <jsp:include page="../layout/footer.jsp" />
         <!-- Back to Top -->
         <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
 

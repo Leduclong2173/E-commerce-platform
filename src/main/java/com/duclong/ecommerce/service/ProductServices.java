@@ -48,4 +48,8 @@ public class ProductServices {
         }
         return productRepository.searchByNameOrId(keyword, id);
     }
+
+    public List<Product> getRelatedProducts(String keyword) {
+        return productRepository.findTop4ByNameNotContainingIgnoreCase(keyword);
+    }
 }

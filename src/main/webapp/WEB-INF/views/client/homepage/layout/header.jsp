@@ -12,6 +12,19 @@
             <div class="collapse navbar-collapse bg-white justify-content-between mx-5" id="navbarCollapse">
                 <div class="navbar-nav">
                     <a href="/" class="nav-item nav-link active">Trang Chủ</a>
+                    <!-- Form tìm kiếm -->
+                    <form id="searchForm" class="d-flex align-items-center ms-3" action="/homepage/search" method="get">
+                        <input
+                            type="text"
+                            name="keyword"
+                            class="form-control form-control-sm me-2"
+                            placeholder="Tìm sản phẩm, cửa hàng"
+                            style="width: 200px"
+                        />
+                        <button type="submit" class="btn btn-sm btn-primary rounded-pill">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
                 </div>
                 <div class="d-flex m-3 me-0">
                     <c:if test="${not empty pageContext.request.userPrincipal}">
@@ -26,19 +39,9 @@
                             </span>
                         </a>
                         <div class="dropdown my-auto">
-                            <a
-                                href="#"
-                                class="dropdown"
-                                role="button"
-                                id="dropdownMenuLink"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                            >
+                            <a href="#" class="dropdown" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-user fa-2x"></i>
                             </a>
-
                             <ul class="dropdown-menu dropdown-menu-end p-4" aria-labelledby="dropdownMenuLink">
                                 <li class="d-flex align-items-center flex-column" style="min-width: 300px">
                                     <img
@@ -49,15 +52,9 @@
                                         <c:out value="${sessionScope.username}" />
                                     </div>
                                 </li>
-
                                 <li><a class="dropdown-item" href="/client">Quản lý tài khoản</a></li>
-
                                 <li><a class="dropdown-item" href="/order-history">Lịch sử mua hàng</a></li>
-
-                                <li>
-                                    <hr class="dropdown-divider" />
-                                </li>
-
+                                <li><hr class="dropdown-divider" /></li>
                                 <li>
                                     <form method="post" action="/logout">
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -75,3 +72,4 @@
         </nav>
     </div>
 </div>
+<!-- Navbar end -->
