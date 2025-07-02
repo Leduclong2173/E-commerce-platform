@@ -70,7 +70,7 @@
                                                     <td>
                                                         <a href="/admin/shop/manageproduct/${shop.shop_id}" class="btn btn-success">View Product</a>
                                                         <a href="/admin/shop/manageorder/${shop.shop_id}" class="btn btn-success">View Order</a>
-                                                        <a href="/admin/shop/revenue/${shop.shop_id}" class="btn btn-success">View Revenue</a>
+                                                        <a href="/admin/shop/managerevenue/${shop.shop_id}" class="btn btn-success">View Revenue</a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>

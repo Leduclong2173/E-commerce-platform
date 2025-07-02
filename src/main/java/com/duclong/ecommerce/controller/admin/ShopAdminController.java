@@ -117,7 +117,33 @@ public class ShopAdminController {
         
         return "admin/manageshop/showOrderofShop";
     }
+   
+    @GetMapping("/admin/shop/managerevenue/{id}")
+    public String getRevenueOfShop(Model model, @PathVariable Long id) {
+        Optional<Shop> shopOptional = this.shopService.getShopById(id);
+        if(!shopOptional.isPresent()){
+            throw new RuntimeException("Shop not found");
+        }
+        Shop shop = shopOptional.get();
 
-    
+        List<Product> products = shop.getProducts();
 
+        double totalRevenue = 0.0;
+        for (Product product : products) {
+            List<Order> orders = this.orderService.getOrdersByProduct(product);
+            for (Order order : orders) {
+                totalRevenue += order.getTotalPrice();
+            }
+        }
+
+        double netRevenue = totalRevenue * 0.8;
+
+        
+        model.addAttribute("shop", shop);
+        model.addAttribute("products", products);
+        model.addAttribute("totalRevenue", totalRevenue);
+        model.addAttribute("netRevenue", netRevenue);
+        
+        return "admin/manageshop/showRevenueOfShop";
+    }
 }
