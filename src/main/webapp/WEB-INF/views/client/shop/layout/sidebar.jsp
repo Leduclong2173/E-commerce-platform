@@ -5,28 +5,28 @@
         <div class="sb-sidenav-menu">
             <div class="nav">
                 <div class="sb-sidenav-menu-heading">Features</div>
-                <a class="nav-link" href="/client">
+                <a class="nav-link" href="/shop">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>
                     Dashboard
                 </a>
 
-                <a class="nav-link" href="/client/information">
+                <a class="nav-link" href="/shop/inforshop">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>
                     Information
                 </a>
 
-                <a class="nav-link" href="/client/product">
+                <a class="nav-link" href="/shop/product">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>
                     Product
                 </a>
 
-                <a class="nav-link" href="/client/order">
+                <a class="nav-link" href="/shop/order">
                     <div class="sb-nav-link-icon">
                         <i class="fas fa-tachometer-alt"></i>
                     </div>

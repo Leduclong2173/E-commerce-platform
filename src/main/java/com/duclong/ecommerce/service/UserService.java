@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.duclong.ecommerce.domain.Product;
 import com.duclong.ecommerce.domain.Role;
 import com.duclong.ecommerce.domain.User;
+import com.duclong.ecommerce.repository.CategoryRepository;
+import com.duclong.ecommerce.repository.OrderRepository;
 import com.duclong.ecommerce.repository.ProductRepository;
 import com.duclong.ecommerce.repository.RoleRepository;
 import com.duclong.ecommerce.repository.UserRepository;
@@ -17,15 +19,18 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
 
     public UserService(
         UserRepository userRepository,
         RoleRepository roleRepository,
-        ProductRepository productRepository
+        ProductRepository productRepository,
+        OrderRepository orderRepository
     ){
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.productRepository = productRepository;
+        this.orderRepository = orderRepository;
     }
 
     public List<User> getAllUser(){
@@ -73,11 +78,26 @@ public class UserService {
             id = Long.parseLong(keyword);
         } catch (NumberFormatException e) {
         }
-        return userRepository.searchByUsernameOrId(keyword, id);
+        return this.userRepository.searchByUsernameOrId(keyword, id);
     }
 
-    public List<User> searchUsersAndProducts(String keyword) {
-        return userRepository.findByNameContainingIgnoreCaseOrProductsNameContainingIgnoreCase(keyword);
+    public void updateUserRole(Long id){
+        User user = getUserById(id);
+        Role role = getRoleByName("SHOP");
+        user.setRole(role);
+        this.userRepository.save(user);
+    }
+
+    public long countUsers() {
+        return this.userRepository.count();
+    }
+
+    public long countProducts() {
+        return this.productRepository.count();
+    }
+
+    public long countOrders() {
+        return this.orderRepository.count();
     }
 
 }

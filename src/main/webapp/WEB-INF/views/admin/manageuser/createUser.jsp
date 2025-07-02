@@ -96,7 +96,7 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
                                             <form:input
                                                 type="text"
                                                 class="form-control ${not empty errorName ? 'is-invalid' : ''}"
-                                                id="InputEmail"
+                                                id="InputName"
                                                 path="name"
                                             />
                                             ${errorName}

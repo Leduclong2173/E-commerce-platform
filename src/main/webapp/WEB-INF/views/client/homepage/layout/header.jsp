@@ -12,6 +12,16 @@
             <div class="collapse navbar-collapse bg-white justify-content-between mx-5" id="navbarCollapse">
                 <div class="navbar-nav">
                     <a href="/" class="nav-item nav-link active">Trang Chủ</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Danh mục</a>
+                        <div class="dropdown-menu">
+                            <c:forEach var="category" items="${categories}">
+                                <a href="/homepage/category/${category.category_id}" class="dropdown-item">
+                                    <c:out value="${category.name}" />
+                                </a>
+                            </c:forEach>
+                        </div>
+                    </div>
                     <!-- Form tìm kiếm -->
                     <form id="searchForm" class="d-flex align-items-center ms-3" action="/homepage/search" method="get">
                         <input
@@ -52,8 +62,14 @@
                                         <c:out value="${sessionScope.username}" />
                                     </div>
                                 </li>
-                                <li><a class="dropdown-item" href="/client">Quản lý tài khoản</a></li>
+                                <li><a class="dropdown-item" href="/infor">Quản lý thông tin cá nhân</a></li>
                                 <li><a class="dropdown-item" href="/order-history">Lịch sử mua hàng</a></li>
+                                <c:if test="${sessionScope.role_id == 2}">
+                                    <li><a class="dropdown-item" href="/shop/register">Mở shop</a></li>
+                                </c:if>
+                                <c:if test="${sessionScope.role_id == 3}">
+                                    <li><a class="dropdown-item" href="/shop">Quản lý shop</a></li>
+                                </c:if>
                                 <li><hr class="dropdown-divider" /></li>
                                 <li>
                                     <form method="post" action="/logout">

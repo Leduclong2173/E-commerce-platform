@@ -19,8 +19,8 @@ uri="http://www.springframework.org/tags/form" %> <%@ taglib prefix="fmt" uri="h
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Product Details</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="/client">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="/client/product">Products</a></li>
+                            <li class="breadcrumb-item"><a href="/shop">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="/shop/product">Products</a></li>
                             <li class="breadcrumb-item active">Detail</li>
                         </ol>
                         <div class="container mt-5">
@@ -29,22 +29,21 @@ uri="http://www.springframework.org/tags/form" %> <%@ taglib prefix="fmt" uri="h
                                     <div class="d-flex justify-content-between">
                                         <h3>${product.name}</h3>
                                     </div>
-
                                     <hr />
-
                                     <div class="card" style="width: 60%">
                                         <img style="width: 40vh" class="card-img-top" src="/images/product/${product.image}" alt="product image" />
                                         <div class="card-header">Product information</div>
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item">ID: ${product.product_id}</li>
                                             <li class="list-group-item">Name: ${product.name}</li>
+                                            <li class="list-group-item">Category: ${product.category.name}</li>
                                             <li class="list-group-item">Price: <fmt:formatNumber type="number" value="${product.price}" /> đ</li>
                                             <li class="list-group-item">Short description ${product.shortDesc}</li>
                                             <li class="list-group-item">Detail description: ${product.detailDesc}</li>
                                             <li class="list-group-item">Stock: ${product.stock}</li>
                                         </ul>
                                     </div>
-                                    <a href="/client/product" class="btn btn-success mt-3">Back</a>
+                                    <a href="/shop/product" class="btn btn-success mt-3">Back</a>
                                 </div>
                             </div>
                         </div>

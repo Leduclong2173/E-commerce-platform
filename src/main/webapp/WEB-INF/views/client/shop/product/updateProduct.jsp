@@ -39,8 +39,8 @@ uri="http://www.springframework.org/tags/form" %>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Update</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="/client">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="/client/product">Products</a></li>
+                            <li class="breadcrumb-item"><a href="/shop">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="/shop/product">Products</a></li>
                             <li class="breadcrumb-item active">Update</li>
                         </ol>
                         <div class="mt-5">
@@ -50,13 +50,16 @@ uri="http://www.springframework.org/tags/form" %>
                                     <hr />
                                     <form:form
                                         method="post"
-                                        action="/client/product/update"
+                                        action="/shop/product/update"
                                         class="row"
                                         enctype="multipart/form-data"
                                         modelAttribute="updateProduct"
                                     >
                                         <c:set var="errorName">
                                             <form:errors path="name" cssClass="invalid-feedback" />
+                                        </c:set>
+                                        <c:set var="errorCategory">
+                                            <form:errors path="category" cssClass="invalid-feedback" />
                                         </c:set>
                                         <c:set var="errorPrice">
                                             <form:errors path="price" cssClass="invalid-feedback" />
@@ -78,6 +81,14 @@ uri="http://www.springframework.org/tags/form" %>
                                             <label class="form-label">Name</label>
                                             <form:input type="text" class="form-control ${not empty errorName ? 'is-invalid' : ''}" path="name" />
                                             ${errorName}
+                                        </div>
+                                        <div class="mb-3 col-12 col-md-6">
+                                            <label class="form-label">Category</label>
+                                            <form:select class="form-control ${not empty errorCategory ? 'is-invalid' : ''}" path="category">
+                                                <form:option value="" label="-- Select Category --" />
+                                                <form:options items="${categories}" itemValue="category_id" itemLabel="name" />
+                                            </form:select>
+                                            ${errorCategory}
                                         </div>
                                         <div class="mb-3 col-12 col-md-6">
                                             <label class="form-label">Price</label>
@@ -116,7 +127,7 @@ uri="http://www.springframework.org/tags/form" %>
                                         </div>
                                         <div class="col-12 mb-5">
                                             <button type="submit" class="btn btn-warning">Update</button>
-                                            <a href="/client/product" class="btn btn-success">Back</a>
+                                            <a href="/shop/product" class="btn btn-success">Back</a>
                                         </div>
                                     </form:form>
                                 </div>

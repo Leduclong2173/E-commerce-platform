@@ -15,7 +15,7 @@
 
         <!-- Icon Font Stylesheet -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/fontbridges/bootstrap-icons.css" rel="stylesheet" />
 
         <!-- Libraries Stylesheet -->
         <link href="/client/lib/lightbox/css/lightbox.min.css" rel="stylesheet" />
@@ -38,7 +38,6 @@
         </style>
 
         <meta name="_csrf" content="${_csrf.token}" />
-        <!-- default header name is X-CSRF-TOKEN -->
         <meta name="_csrf_header" content="${_csrf.headerName}" />
 
         <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet" />
@@ -58,6 +57,12 @@
 
         <div class="container-fluid fruite">
             <div class="container py-5">
+                <c:if test="${not empty errorMessage}">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        ${errorMessage}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </c:if>
                 <div class="tab-class text-center">
                     <div class="row g-4">
                         <div class="text-start">
@@ -69,17 +74,17 @@
                             <div class="row g-4">
                                 <div class="col-lg-12">
                                     <c:choose>
-                                        <c:when test="${not empty users}">
-                                            <c:forEach var="user" items="${users}">
-                                                <c:if test="${not empty user.products}">
+                                        <c:when test="${not empty shops}">
+                                            <c:forEach var="shop" items="${shops}">
+                                                <c:if test="${not empty shop.products}">
                                                     <div class="row g-4 mb-4">
                                                         <div class="col-12">
-                                                            <h3 class="text-start">${user.name}</h3>
+                                                            <h3 class="text-start">${shop.name}</h3>
                                                             <hr />
                                                         </div>
-                                                        <c:forEach var="product" items="${user.products}">
+                                                        <c:forEach var="product" items="${shop.products}">
                                                             <div class="col-md-6 col-lg-4 col-xl-3">
-                                                                <div class="rounded position-relative fruite-item">
+                                                                <div class="rounded position-relative fruite-item" style="height: 400px; display: flex; flex-direction: column; justify-content: space-between">
                                                                     <div class="fruite-img">
                                                                         <img src="/images/product/${product.image}" class="img-fluid rounded-top" alt="">
                                                                     </div>
@@ -92,6 +97,10 @@
                                                                             <p style="font-size: 15px; text-align: center; width: 100%;" class="text-dark fw-bold mb-3">
                                                                                 <fmt:formatNumber type="number" value="${product.price}" /> đ
                                                                             </p>
+                                                                            <c:if test="${product.stock == 0}">
+                                                                                <p class="text-danger fw-bold text-center">Hết hàng</p>
+                                                                            </c:if>
+                                                                            <c:if test="${product.stock > 0}">
                                                                                 <form action="/add-product-to-cart/${product.product_id}" method="post">
                                                                                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                                                                     <button data-product-id="${product.product_id}" class="btnAddToCartHomepage mx-auto btn border border-secondary rounded-pill px-3 text-primary">
@@ -99,6 +108,7 @@
                                                                                         Add to cart
                                                                                     </button>
                                                                                 </form>
+                                                                            </c:if>
                                                                         </div>
                                                                     </div>
                                                                 </div>

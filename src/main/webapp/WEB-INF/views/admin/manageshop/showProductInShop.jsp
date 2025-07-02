@@ -18,10 +18,13 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Manage Products</h1>
+                        <h1 class="mt-4">Products</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">
-                                <a href="/client">Dashboard</a>
+                                <a href="/admin">Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a href="/admin/shop">Shops</a>
                             </li>
                             <li class="breadcrumb-item active">Products</li>
                         </ol>
@@ -31,8 +34,13 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
                                     <div class="d-flex justify-content-between">
                                         <h3>Table product</h3>
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <!-- Search Form -->
-                                            <form action="/client/product/search" method="GET" class="d-flex" style="flex-grow: 1; max-width: 500px">
+                                            <!-- Search Form
+                                            <form
+                                                action="/admin/shop/manageproduct/1/search"
+                                                method="GET"
+                                                class="d-flex"
+                                                style="flex-grow: 1; max-width: 500px"
+                                            >
                                                 <input
                                                     type="text"
                                                     name="keyword"
@@ -41,15 +49,20 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
                                                     value="${param.keyword}"
                                                 />
                                                 <button type="submit" class="btn btn-outline-primary">Search</button>
-                                            </form>
-                                            <a href="/client/product/create" class="btn btn-primary ms-3">Create a product</a>
+                                            </form> -->
                                         </div>
                                     </div>
+                                    <c:if test="${not empty message}">
+                                        <div class="alert alert-${messageType} alert-dismissible fade show" role="alert">
+                                            <c:out value="${message}" />
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    </c:if>
                                     <hr />
                                     <c:choose>
                                         <c:when test="${empty products}">
-                                            <div class="alert alert-warning text-center" role="alert">No products available for this user.</div>
-                                            <a href="/client" class="btn btn-success mt-3">Back</a>
+                                            <div class="alert alert-warning text-center" role="alert">No products available for this shop.</div>
+                                            <a href="/admin/shop" class="btn btn-success">Back</a>
                                         </c:when>
                                         <c:otherwise>
                                             <table class="table table-bordered table-hover">
@@ -58,6 +71,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
                                                         <th>ID</th>
                                                         <th>Product name</th>
                                                         <th>Price</th>
+                                                        <th>Category</th>
                                                         <th>Stock</th>
                                                         <th>Action</th>
                                                     </tr>
@@ -68,14 +82,13 @@ uri="http://java.sun.com/jsp/jstl/fmt" %>
                                                             <th>${product.product_id}</th>
                                                             <td>${product.name}</td>
                                                             <td><fmt:formatNumber type="number" value="${product.price}" /> đ</td>
+                                                            <td>${product.category.name}</td>
                                                             <td>${product.stock}</td>
                                                             <td>
-                                                                <a href="/client/product/${product.product_id}" class="btn btn-success">View</a>
-                                                                <a href="/client/product/update/${product.product_id}" class="btn btn-warning mx-2"
-                                                                    >Update</a
-                                                                >
-                                                                <a href="/client/product/delete/${product.product_id}" class="btn btn-danger"
-                                                                    >Delete</a
+                                                                <a
+                                                                    href="/admin/shop/manageproduct/product/${product.product_id}"
+                                                                    class="btn btn-success"
+                                                                    >View</a
                                                                 >
                                                             </td>
                                                         </tr>

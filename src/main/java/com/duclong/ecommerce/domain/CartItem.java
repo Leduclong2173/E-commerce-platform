@@ -15,7 +15,7 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cart_item_id;
 
-    private int quantity;
+    private long quantity;
 
     private double price;
 
@@ -35,11 +35,11 @@ public class CartItem {
         this.cart_item_id = cart_item_id;
     }
 
-    public int getQuantity() {
+    public long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(long quantity) {
         this.quantity = quantity;
     }
 

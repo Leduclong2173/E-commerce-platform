@@ -23,11 +23,14 @@ import com.duclong.ecommerce.service.UploadService;
 import com.duclong.ecommerce.service.UserService;
 
 import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 
@@ -60,7 +63,7 @@ public class UserController {
     }
 
     @GetMapping("/admin/user/search")
-    public String getsearchUser(@RequestParam("keyword") String keyword, Model model) {
+    public String getSearchUser(@RequestParam("keyword") String keyword, Model model) {
         List<User> users = userService.searchByUsernameOrId(keyword);
         model.addAttribute("users", users);
         return "admin/manageuser/showUser";
@@ -76,8 +79,12 @@ public class UserController {
     public String postCreateUser(
         @Valid @ModelAttribute("newUser") User user,
         BindingResult newUserBindingResult,
-        @RequestParam("avatarFile") MultipartFile file
+        @RequestParam("avatarFile") MultipartFile file,
+        RedirectAttributes redirectAttributes,
+        HttpServletRequest request
         ) {
+
+        HttpSession session = request.getSession(false);
         
         List<FieldError> errors = newUserBindingResult.getFieldErrors();
         for (FieldError error : errors ) {
@@ -104,7 +111,16 @@ public class UserController {
         user.setPassword(hashPassword);
         user.setRole(this.userService.getRoleByName(user.getRole().getName()));
 
-        this.userService.handleSaveUser(user);
+        try {
+            this.userService.handleSaveUser(user);
+            redirectAttributes.addFlashAttribute("message", "Thêm người dùng thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "success");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", "Lỗi khi thêm người dùng: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("messageType", "error");
+        }
+        
+        session.setAttribute("avatar", avatarName);
         return "redirect:/admin/user";
     }
     
@@ -116,8 +132,15 @@ public class UserController {
     }
     
     @PostMapping("/admin/user/delete")
-    public String postDeleteUser(@ModelAttribute("newUser") User user) {
-        this.userService.deleteUserById(user.getUser_id());
+    public String postDeleteUser(@ModelAttribute("newUser") User user, RedirectAttributes redirectAttributes) {
+        try {
+            this.userService.deleteUserById(user.getUser_id());
+            redirectAttributes.addFlashAttribute("message", "Xóa người dùng thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "success");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", "Lỗi khi xóa người dùng: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("messageType", "error");
+        }
         return "redirect:/admin/user";
     }
 
@@ -140,25 +163,22 @@ public class UserController {
     public String postUpdateUser(
         @Valid @ModelAttribute("updateUser") User user,
         BindingResult updateUserBindingResult,
-        @RequestParam("avatarFile") MultipartFile file
+        @RequestParam("avatarFile") MultipartFile file,
+        RedirectAttributes redirectAttributes,
+        HttpServletRequest request
         ) {
         
+        HttpSession session = request.getSession(false);
         List<FieldError> errors = updateUserBindingResult.getFieldErrors();
         for (FieldError error : errors ) {
         System.out.println (error.getField() + " - " + error.getDefaultMessage());
         }
 
         // Validate
-         User userByUsername = this.userService.getUserByUsername(user.getUsername());
-        if (userByUsername != null && userByUsername.getUser_id() != userByUsername.getUser_id()) {
+        User userByEmail = userService.getUserByEmail(user.getEmail());
+        if (userByEmail != null && !userByEmail.getUser_id().equals(user.getUser_id())) {
             updateUserBindingResult.rejectValue("email", "error.email", "Email đã tồn tại!");
         }
-
-        User userByEmail = this.userService.getUserByEmail(user.getEmail());
-        if (userByEmail != null && userByEmail.getUser_id() != userByEmail.getUser_id()) {
-        updateUserBindingResult.rejectValue("email", "error.email", "Email đã tồn tại!");
-        }
-
         if(updateUserBindingResult.hasErrors()){
             return "admin/manageuser/updateUser";
         }
@@ -168,30 +188,39 @@ public class UserController {
         user.setAvatar(avatarName);
         user.setRole(this.userService.getRoleByName(user.getRole().getName()));
 
-        this.userService.handleSaveUser(user);
+        try {
+            this.userService.handleSaveUser(user);
+            redirectAttributes.addFlashAttribute("message", "Cập nhật thông tin người dùng thành công!");
+            redirectAttributes.addFlashAttribute("messageType", "success");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", "Lỗi khi cập nhật thông tin người dùng: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("messageType", "error");
+        }
+        
+        session.setAttribute("avatar", avatarName);
         return "redirect:/admin/user";
     }
     
-    @GetMapping("/admin/user/viewshop/{id}")
-    public String getViewShopPage(Model model, @PathVariable long id) {
-        User user = this.userService.getUserById(id);
-        List<Product> products = this.productServices.getAllProductByUser(user);
-        model.addAttribute("products", products);
-        return "admin/manageuser/viewShop";
-    }
+    // @GetMapping("/admin/user/viewshop/{id}")
+    // public String getViewShopPage(Model model, @PathVariable long id) {
+    //     User user = this.userService.getUserById(id);
+    //     List<Product> products = this.productServices.getAllProductByUser(user);
+    //     model.addAttribute("products", products);
+    //     return "admin/manageuser/viewShop";
+    // }
 
-    @GetMapping("/admin/user/viewshop/search")
-    public String getsearchProduct(@RequestParam("keyword") String keyword, Model model) {
-        List<Product> products = this.productServices.searchByNameOrId(keyword);
-        model.addAttribute("products", products);
-        return "admin/manageuser/viewShop";
-    }
+    // @GetMapping("/admin/user/viewshop/search")
+    // public String getsearchProduct(@RequestParam("keyword") String keyword, Model model) {
+    //     List<Product> products = this.productServices.searchByNameOrId(keyword);
+    //     model.addAttribute("products", products);
+    //     return "admin/manageuser/viewShop";
+    // }
 
-    @GetMapping("/admin/user/viewshopdetail/{id}")
-    public String getViewShopDetailPage(Model model, @PathVariable long id) {
-        Product product = this.productServices.getProductById(id);
-        model.addAttribute("product", product);
-        model.addAttribute("id", id);
-        return "admin/manageuser/viewShopDetail";
-    }
+    // @GetMapping("/admin/user/viewshopdetail/{id}")
+    // public String getViewShopDetailPage(Model model, @PathVariable long id) {
+    //     Product product = this.productServices.getProductById(id);
+    //     model.addAttribute("product", product);
+    //     model.addAttribute("id", id);
+    //     return "admin/manageuser/viewShopDetail";
+    // }
 }

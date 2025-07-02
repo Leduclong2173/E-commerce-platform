@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -29,7 +30,7 @@ public class Product {
 
     @NotNull(message = "Price cannot be empty")
     @Positive(message = "Price must be greater than 0")
-    private double price;
+    private Double price;
 
     private String shortDesc;
 
@@ -39,7 +40,7 @@ public class Product {
     private String image;
 
     @NotNull(message = "Stock cannot be empty")
-    @Positive(message = "Stock must be greater than 0")
+    @PositiveOrZero(message = "Stock must be 0 or greater")
     private Long stock;
 
     @OneToMany(mappedBy = "product")
@@ -49,8 +50,13 @@ public class Product {
     private List<OrderItem> orderItems;
 
     @ManyToOne
-    @JoinColumn(name = "seller_id")
-    private User user;
+    @JoinColumn(name = "shop_id")
+    private Shop shop;
+    
+    @NotNull(message = "Please select a category")
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     public Long getProduct_id() {
         return product_id;
@@ -68,7 +74,7 @@ public class Product {
         this.name = name;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
@@ -124,19 +130,20 @@ public class Product {
         this.orderItems = orderItems;
     }
 
-    public User getUser() {
-        return user;
+    public Shop getShop() {
+        return shop;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 
-    @Override
-    public String toString() {
-        return "Product [product_id=" + product_id + ", name=" + name + ", price=" + price + ", shortDesc=" + shortDesc
-                + ", detailDesc=" + detailDesc + ", image=" + image + ", stock=" + stock + ", cartItems=" + cartItems
-                + ", orderItems=" + orderItems + ", user=" + user + "]";
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     

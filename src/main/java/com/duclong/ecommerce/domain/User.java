@@ -36,7 +36,7 @@ public class User {
     private String email;
 
     @NotBlank(message = "Password cannot be empty")
-    @Size(min = 6, max = 100, message = "Password must be between 8 and 100 characters")
+    @Size(min = 6, max = 100, message = "Password must be between 6 and 100 characters")
     private String password;
 
     @NotBlank(message = "Phone cannot be empty")
@@ -53,10 +53,10 @@ public class User {
     private Cart cart;
 
     @OneToMany(mappedBy = "user")
-    private List<Product> products;
-
-    @OneToMany(mappedBy = "user")
     private List<Order> orders;
+
+    @OneToOne(mappedBy = "user")
+    private Shop shop;
 
     public Long getUser_id() {
         return user_id;
@@ -138,14 +138,6 @@ public class User {
         this.cart = cart;
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
     public List<Order> getOrders() {
         return orders;
     }
@@ -154,12 +146,13 @@ public class User {
         this.orders = orders;
     }
 
-    @Override
-    public String toString() {
-        return "User [user_id=" + user_id + ", username=" + username + ", name=" + name + ", email=" + email
-                + ", password=" + password + ", phone=" + phone + ", address=" + address + ", avatar=" + avatar
-                + ", role=" + role + ", cart=" + cart + ", products=" + products + ", orders=" + orders + "]";
+    public Shop getShop() {
+        return shop;
     }
-    
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
+   
     
 }

@@ -21,10 +21,10 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
                         <h1 class="mt-4">Delete</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">
-                                <a href="/client">Dashboard</a>
+                                <a href="/shop">Dashboard</a>
                             </li>
                             <li class="breadcrumb-item active">
-                                <a href="/client/product">Products</a>
+                                <a href="/shop/product">Products</a>
                             </li>
                             <li class="breadcrumb-item active">Delete Product</li>
                         </ol>
@@ -34,13 +34,13 @@ uri="http://www.springframework.org/tags/form" prefix="form"%>
                                     <h3>Delete product with id = ${id}</h3>
                                     <hr />
                                     <div class="alert alert-danger">Are you sure to delete this product ?</div>
-                                    <form:form method="post" action="/client/product/delete" modelAttribute="newProduct">
+                                    <form:form method="post" action="/shop/product/delete" modelAttribute="newProduct">
                                         <div class="mb-3" style="display: none">
                                             <label for="Id" class="form-label">Id</label>
                                             <form:input value="${id}" type="text" class="form-control" id="Id" path="product_id" />
                                         </div>
                                         <button class="btn btn-danger">Confirm</button>
-                                        <a href="/client/product" class="btn btn-success">Back</a>
+                                        <a href="/shop/product" class="btn btn-success">Back</a>
                                     </form:form>
                                 </div>
                             </div>

@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.duclong.ecommerce.domain.Product;
-import com.duclong.ecommerce.domain.User;
+import com.duclong.ecommerce.domain.Shop;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
@@ -21,11 +21,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     
     void deleteById(long id);
 
-    List<Product> findAllByUser(User user);
+    List<Product> findAllByShop(Shop shop);
 
-    @Query("SELECT p FROM Product p WHERE p.name LIKE %:keyword% OR p.product_id = :id")
+    @Query("SELECT p FROM Product p WHERE p.name LIKE %:keyword% OR p.id = :id")
     List<Product> searchByNameOrId(@Param("keyword") String keyword, @Param("id") Long id);
 
-    @Query("SELECT p FROM Product p WHERE p.name NOT LIKE %:keyword% AND p.shortDesc NOT LIKE %:keyword% ORDER BY p.product_id DESC")
-    List<Product> findTop4ByNameNotContainingIgnoreCase(@Param("keyword") String keyword);
+    List<Product> findByNameContainingIgnoreCase(String name);
 }

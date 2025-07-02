@@ -55,7 +55,7 @@
                                         </div>
                                         <c:forEach var="product" items="${products}">
                                             <div class="col-md-6 col-lg-4 col-xl-3">
-                                                <div class="rounded position-relative fruite-item">
+                                                <div class="rounded position-relative fruite-item" style="height: 400px; display: flex; flex-direction: column; justify-content: space-between">
                                                     <div class="fruite-img">
                                                         <img src="/images/product/${product.image}" class="img-fluid rounded-top" alt="${product.name}">
                                                     </div>
@@ -85,20 +85,20 @@
                                 </c:if>
 
                                 <!-- Cửa hàng tìm được -->
-                                <c:if test="${not empty users}">
+                                <c:if test="${not empty shops}">
                                     <div class="row g-4 mb-4">
                                         <div class="col-12">
                                             <h3 class="text-start">Cửa hàng</h3>
                                             <hr />
                                         </div>
-                                        <c:forEach var="user" items="${users}">
+                                        <c:forEach var="shop" items="${shops}">
                                             <div class="col-md-6 col-lg-4 col-xl-3">
                                                 <div class="rounded position-relative fruite-item">
                                                     <div class="p-4 border border-secondary rounded">
                                                         <h4 style="font-size: 15px;">
-                                                            <a href="/homepage/shop/${user.user_id}">${user.name}</a>
+                                                            <a href="/homepage/shop/${shop.shop_id}">${shop.name}</a>
                                                         </h4>
-                                                        <p style="font-size: 13px;">${user.email}</p>
+                                                        <p style="font-size: 13px;">${shop.description}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -106,45 +106,7 @@
                                     </div>
                                 </c:if>
 
-                                <!-- Sản phẩm liên quan -->
-                                <c:if test="${not empty relatedProducts}">
-                                    <div class="row g-4 mt-4">
-                                        <div class="col-12">
-                                            <h3 class="text-start">Sản phẩm liên quan</h3>
-                                            <hr />
-                                        </div>
-                                        <c:forEach var="relatedProduct" items="${relatedProducts}" varStatus="status" begin="0" end="3">
-                                            <div class="col-md-6 col-lg-4 col-xl-3">
-                                                <div class="rounded position-relative fruite-item">
-                                                    <div class="fruite-img">
-                                                        <img src="/images/product/${relatedProduct.image}" class="img-fluid rounded-top" alt="${relatedProduct.name}">
-                                                    </div>
-                                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                        <h4 style="font-size: 15px;">
-                                                            <a href="/homepage/product/${relatedProduct.product_id}">${relatedProduct.name}</a>
-                                                        </h4>
-                                                        <p style="font-size: 13px;">${relatedProduct.shortDesc}</p>
-                                                        <div class="d-flex flex-lg-wrap justify-content-center flex-column">
-                                                            <p style="font-size: 15px; text-align: center; width: 100%;" class="text-dark fw-bold mb-3">
-                                                                <fmt:formatNumber type="number" value="${relatedProduct.price}" /> đ
-                                                            </p>
-                                                            <form action="/add-product-to-cart/${relatedProduct.product_id}" method="post">
-                                                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                                                <input type="hidden" name="quantity" value="1" />
-                                                                <button data-product-id="${relatedProduct.product_id}" data-stock="${relatedProduct.stock}" class="btnAddToCartHomepage mx-auto btn border border-secondary rounded-pill px-3 text-primary">
-                                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i>
-                                                                    Add to cart
-                                                                </button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </c:forEach>
-                                    </div>
-                                </c:if>
-
-                                <c:if test="${empty products && empty users && empty relatedProducts}">
+                                <c:if test="${empty products && empty shops && empty relatedProducts}">
                                     <div class="alert alert-warning text-center" role="alert">
                                         Không tìm thấy sản phẩm hoặc cửa hàng nào khớp với từ khóa "${param.keyword}".
                                     </div>
@@ -155,17 +117,18 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <jsp:include page="../layout/footer.jsp" />
-        <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
+    <jsp:include page="../layout/footer.jsp" />
+    <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="/client/lib/easing/easing.min.js"></script>
-        <script src="/client/lib/waypoints/waypoints.min.js"></script>
-        <script src="/client/lib/lightbox/js/lightbox.min.js"></script>
-        <script src="/client/lib/owlcarousel/owl.carousel.min.js"></script>
-        <script src="/client/js/main.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
-    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/client/lib/easing/easing.min.js"></script>
+    <script src="/client/lib/waypoints/waypoints.min.js"></script>
+    <script src="/client/lib/lightbox/js/lightbox.min.js"></script>
+    <script src="/client/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/client/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
+</body>
 </html>

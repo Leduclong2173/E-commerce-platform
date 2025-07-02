@@ -1,5 +1,6 @@
 package com.duclong.ecommerce.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -36,21 +37,25 @@ public class CartService {
     public void handleAddProductToCart(String username, Long productId, HttpSession session){
         User user = this.userService.getUserByUsername(username);
         if(user != null){
+            // Check user have cart
             Cart cart = this.cartRepository.findByUser(user);
 
             if(cart == null){
+                // Create new cart
                 Cart newCart = new Cart();
                 newCart.setUser(user);
                 newCart.setSum(0);
 
                 cart = this.cartRepository.save(newCart);
             }
+            // Save cart items
+            // Search product by id
             Optional<Product> productOptional = this.productRepository.findById(productId);
             if(productOptional.isPresent()){
                 Product realProduct = productOptional.get();
 
+                // Check product isExist in cart before
                 CartItem oldCartItem = this.cartItemRepository.findByCartAndProduct(cart, realProduct);
-
                 if(oldCartItem == null){
                     CartItem cartItem = new CartItem();
                     cartItem.setCart(cart);
@@ -58,41 +63,56 @@ public class CartService {
                     cartItem.setPrice(realProduct.getPrice());
                     cartItem.setQuantity(1);
                     this.cartItemRepository.save(cartItem);
-
-                    int s = cart.getSum() + 1;
-                    cart.setSum(s);
+                    // Update sum cart item in cart
+                    int sum = cart.getSum() + 1;
+                    cart.setSum(sum);
                     this.cartRepository.save(cart);
-                    session.setAttribute("sum", s);
+                    session.setAttribute("sum", sum);
                 } else {
                     oldCartItem.setQuantity(oldCartItem.getQuantity() + 1);
+                    this.cartItemRepository.save(oldCartItem);
                 }
-            }
-        }  
+                
+            } 
+        }
     }
 
     public Cart fetchByUser(User user){
         return this.cartRepository.findByUser(user);
     }
 
-    public void handleRemoveCartItem(Long cartItemId, HttpSession session) {
+    public void handleRemoveCartItem(Long cartItemId, HttpSession session){
         Optional<CartItem> cartItemOptional = this.cartItemRepository.findById(cartItemId);
-        if (cartItemOptional.isPresent()){
+        if(cartItemOptional.isPresent()){
             CartItem cartItem = cartItemOptional.get();
 
-            Cart currentCart = cartItem.getCart();
-
+            Cart currenCart = cartItem.getCart();
+            // Delete cart item
             this.cartItemRepository.deleteById(cartItemId);
 
-            if (currentCart.getSum() > 1){
-                int sum = currentCart.getSum() - 1;
-                currentCart.setSum(sum);
+            // Update sum cart item in cart
+            if(currenCart.getSum() > 1){
+                // Update sum
+                int sum = currenCart.getSum() - 1;
+                currenCart.setSum(sum);
+                this.cartRepository.save(currenCart);
                 session.setAttribute("sum", sum);
-                this.cartRepository.save(currentCart);
             } else {
-                this.cartRepository.deleteById(currentCart.getCart_id());
+                // Delete if sum = 1
+                this.cartRepository.deleteById(currenCart.getCart_id());
                 session.setAttribute("sum", 0);
             }
         }
     }
 
+    public void handleUpdateCartBeforeCheckout(List<CartItem> cartItems){
+        for (CartItem cartItem : cartItems) {
+            Optional<CartItem> cartItemOptional = this.cartItemRepository.findById(cartItem.getCart_item_id());
+            if(cartItemOptional.isPresent()){
+                CartItem currentCartItem = cartItemOptional.get();
+                currentCartItem.setQuantity(cartItem.getQuantity());
+                this.cartItemRepository.save(currentCartItem);
+            }
+        }
+    }
 }

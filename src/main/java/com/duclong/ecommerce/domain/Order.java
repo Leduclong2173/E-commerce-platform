@@ -1,6 +1,7 @@
 package com.duclong.ecommerce.domain;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -21,7 +22,13 @@ public class Order {
 
     private double totalPrice;
 
-    private LocalDateTime createAt;
+    private String receiverName;
+
+    private String receiverAddress;
+
+    private String receiverPhone;
+
+    private Date createAt;
 
     private String status;
 
@@ -48,11 +55,11 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public LocalDateTime getCreateAt() {
+    public Date getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(LocalDateTime createAt) {
+    public void setCreateAt(Date createAt) {
         this.createAt = createAt;
     }
 
@@ -80,11 +87,30 @@ public class Order {
         this.orderItems = orderItems;
     }
 
-    @Override
-    public String toString() {
-        return "Order [order_id=" + order_id + ", totalPrice=" + totalPrice + ", createAt=" + createAt + ", status="
-                + status + ", uer=" + user + ", orderItems=" + orderItems + "]";
+    public String getReceiverName() {
+        return receiverName;
     }
 
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
+    public String getReceiverAddress() {
+        return receiverAddress;
+    }
+
+    public void setReceiverAddress(String receiverAddress) {
+        this.receiverAddress = receiverAddress;
+    }
+
+    public String getReceiverPhone() {
+        return receiverPhone;
+    }
+
+    public void setReceiverPhone(String receiverPhone) {
+        this.receiverPhone = receiverPhone;
+    }
+
+    
     
 }

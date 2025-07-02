@@ -1,10 +1,14 @@
 package com.duclong.ecommerce.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
 import com.duclong.ecommerce.domain.Product;
+import com.duclong.ecommerce.domain.Shop;
 import com.duclong.ecommerce.domain.User;
 import com.duclong.ecommerce.repository.ProductRepository;
 
@@ -16,12 +20,12 @@ public class ProductServices {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAllProduct(User user){
-        return this.productRepository.findAllByUser(user);
-    }
-
     public Product handleSaveProduct(Product product){
         return this.productRepository.save(product);
+    }
+
+    public List<Product> getAllProduct(){
+        return this.productRepository.findAll();
     }
 
     public Product getProductById(long id){
@@ -32,24 +36,27 @@ public class ProductServices {
         this.productRepository.deleteById(id);
     }
 
-    public List<Product> getAllProductByUser(User user){
-        return this.productRepository.findAllByUser(user);
-    }
-
     public List<Product> searchByNameOrId(String keyword) {
-        if (keyword == null) {
-            return productRepository.findAll();
+        if (keyword == null){
+            return getAllProduct();
         }
         Long id = null;
         try {
             id = Long.parseLong(keyword);
         } catch (NumberFormatException e) {
-            // Ignore if keyword cannot be parsed to Long
         }
-        return productRepository.searchByNameOrId(keyword, id);
+        return this.productRepository.searchByNameOrId(keyword, id);
     }
 
-    public List<Product> getRelatedProducts(String keyword) {
-        return productRepository.findTop4ByNameNotContainingIgnoreCase(keyword);
+    public List<Product> getAllProductByShop(Shop shop){
+        return this.getAllProductByShop(shop);
     }
+
+    public List<Product> searchProducts(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+        return productRepository.findByNameContainingIgnoreCase(keyword);
+    }
+
 }

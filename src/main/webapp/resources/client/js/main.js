@@ -136,33 +136,26 @@
 
     $(".quantity button").on("click", function () {
         let change = 0;
-        var button = $(this);
-        var input = button.parent().parent().find("input");
-        var oldValue = parseInt(input.val());
-        var stock = parseInt(input.data("cart-detail-stock")); // Lấy stock từ data attribute
 
+        var button = $(this);
+        var oldValue = button.parent().parent().find("input").val();
         if (button.hasClass("btn-plus")) {
-            var newVal = oldValue + 1;
-            if (newVal <= stock) {
-                change = 1;
-            } else {
-                alert("Số lượng đã đạt tối đa tồn kho (" + stock + ")!");
-                return; // Không cập nhật nếu vượt stock
-            }
+            var newVal = parseFloat(oldValue) + 1;
+            change = 1;
         } else {
             if (oldValue > 1) {
-                var newVal = oldValue - 1;
+                var newVal = parseFloat(oldValue) - 1;
                 change = -1;
             } else {
                 newVal = 1;
             }
         }
-
+        const input = button.parent().parent().find("input");
         input.val(newVal);
 
         //set form index
         const index = input.attr("data-cart-detail-index");
-        const el = document.getElementById(`cartDetails${index}.quantity`);
+        const el = document.getElementById(`cartItems${index}.quantity`);
         $(el).val(newVal);
 
         //get price
@@ -213,9 +206,4 @@
         formatted = formatted.replace(/\./g, ",");
         return formatted;
     }
-
-    //set form index
-    const index = input.attr("data-cart-detail-index");
-    const el = document.getElementById(`cartDetails${index}.quantity`);
-    $(el).val(newVal);
 })(jQuery);

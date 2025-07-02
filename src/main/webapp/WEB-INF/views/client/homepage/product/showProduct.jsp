@@ -64,6 +64,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
                             </div>
                             <div class="col-lg-6">
                                 <h4 class="fw-bold mb-3">${product.name}</h4>
+                                <p class="mb-3">Danh mục: ${product.category.name}</p>
                                 <p class="mb-3">Kho: ${product.stock}</p>
                                 <h5 class="fw-bold mb-3"><fmt:formatNumber type="number" value="${product.price}" /> đ</h5>
                                 <p class="mb-4">${product.shortDesc}</p>
@@ -106,7 +107,7 @@ uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
                     </div>
                     <div class="col-lg-4">
                         <div class="border rounded p-4">
-                            <h5 class="fw-bold mb-3">Sản phẩm liên quan</h5>
+                            <h5 class="fw-bold mb-3">Cửa hàng cũng bán</h5>
                             <c:if test="${empty products}">
                                 <p class="text-muted">Chưa có sản phẩm liên quan.</p>
                             </c:if>

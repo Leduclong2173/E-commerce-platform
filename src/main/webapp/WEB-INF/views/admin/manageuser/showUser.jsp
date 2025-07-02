@@ -44,6 +44,12 @@
                                             <a href="/admin/user/create" class="btn btn-primary ms-3">Create a user</a>
                                         </div>
                                     </div>
+                                    <c:if test="${not empty message}">
+                                        <div class="alert alert-${messageType} alert-dismissible fade show" role="alert">
+                                            <c:out value="${message}" />
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    </c:if>
                                     <hr />
                                     <table class="table table-bordered table-hover">
                                         <thead>
@@ -66,7 +72,9 @@
                                                         <a href="/admin/user/${user.user_id}" class="btn btn-success">View</a>
                                                         <a href="/admin/user/update/${user.user_id}" class="btn btn-warning mx-2">Update</a>
                                                         <a href="/admin/user/delete/${user.user_id}" class="btn btn-danger">Delete</a>
-                                                        <a href="/admin/user/viewshop/${user.user_id}" class="btn btn-primary">View Shop</a>
+                                                        <!-- <c:if test="${user.role.role_id != 1}">
+                                                            <a href="/admin/user/viewshop/${user.user_id}" class="btn btn-primary">View Shop</a>
+                                                        </c:if> -->
                                                     </td>
                                                 </tr>
                                             </c:forEach>

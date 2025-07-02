@@ -8,7 +8,7 @@
 
                 <head>
                     <meta charset="utf-8">
-                    <title> Giỏ hàng - Laptopshop</title>
+                    <title>Cart</title>
                     <meta content="width=device-width, initial-scale=1.0" name="viewport">
                     <meta content="" name="keywords">
                     <meta content="" name="description">
@@ -51,6 +51,12 @@
                     <!-- Cart Page Start -->
                     <div class="container-fluid py-5">
                         <div class="container py-5">
+                            <c:if test="${not empty errorMessage}">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    ${errorMessage}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </c:if>
                             <div class="mb-3">
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
@@ -90,7 +96,7 @@
                                                 </th>
                                                 <td>
                                                     <p class="mb-0 mt-4">
-                                                        <a href="/product/${cartItem.product.product_id}" target="_blank">
+                                                        <a href="/homepage/product/${cartItem.product.product_id}" target="_blank">
                                                             ${cartItem.product.name}
                                                         </a>
                                                     </p>
@@ -111,10 +117,9 @@
                                                         <input type="text"
                                                             class="form-control form-control-sm text-center border-0"
                                                             value="${cartItem.quantity}"
-                                                            data-cart-detail-stock ="${cartItem.product.stock}"
                                                             data-cart-detail-id="${cartItem.cart_item_id}"
                                                             data-cart-detail-price="${cartItem.price}"
-                                                            data-cart-detail-index="${status.index}">
+                                                            data-cart-detail-index="${status.index}">                                                       
                                                         <div class="input-group-btn">
                                                             <button
                                                                 class="btn btn-sm btn-plus rounded-circle bg-light border">
@@ -140,6 +145,7 @@
                                                 </td>
                                             </tr>
                                         </c:forEach>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -174,7 +180,7 @@
                                             <form:form action="/confirm-checkout" method="post" modelAttribute="cart">
                                                 <input type="hidden" name="${_csrf.parameterName}"
                                                     value="${_csrf.token}" />
-                                                <div style="display: block;">
+                                                <div style="display: none;">
                                                     <c:forEach var="cartItem" items="${cart.cartItems}"
                                                         varStatus="status">
                                                         <div class="mb-3">
@@ -182,7 +188,7 @@
                                                                 <label>Id:</label>
                                                                 <form:input class="form-control" type="text"
                                                                     value="${cartItem.cart_item_id}"
-                                                                    path="cartItems[${status.index}].id" />
+                                                                    path="cartItems[${status.index}].cart_item_id" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label>Quantity:</label>
@@ -227,4 +233,4 @@
                     <script src="/client/js/main.js"></script>
                 </body>
 
-</html>
+                </html>

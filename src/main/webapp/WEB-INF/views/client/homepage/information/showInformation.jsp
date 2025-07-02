@@ -7,9 +7,40 @@ uri="http://www.springframework.org/tags/form" %>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Information</title>
-        <link href="/css/styles.css" rel="stylesheet" />
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet" />
+
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+
+        <!-- Libraries Stylesheet -->
+        <link href="/client/lib/lightbox/css/lightbox.min.css" rel="stylesheet" />
+        <link href="/client/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="/client/css/bootstrap.min.css" rel="stylesheet" />
+
+        <!-- Template Stylesheet -->
+        <link href="/client/css/style.css" rel="stylesheet" />
+
+        <!-- Custom CSS for uniform image size -->
+        <style>
+            .fruite-img img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                display: block;
+            }
+        </style>
+
+        <meta name="_csrf" content="${_csrf.token}" />
+        <!-- default header name is X-CSRF-TOKEN -->
+        <meta name="_csrf_header" content="${_csrf.headerName}" />
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css" rel="stylesheet" />
     </head>
     <script>
         $(document).ready(() => {
@@ -33,23 +64,17 @@ uri="http://www.springframework.org/tags/form" %>
     <body class="sb-nav-fixed">
         <jsp:include page="../layout/header.jsp" />
         <div id="layoutSidenav">
-            <jsp:include page="../layout/sidebar.jsp" />
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Information</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="/client">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a>Infor</a></li>
-                        </ol>
                         <div class="mt-5">
                             <div class="row">
-                                <div class="col-md-6 col-12 mx-auto">
-                                    <h3>${user.name}</h3>
+                                <div class="col-md-6 col-12 mx-auto mt-5">
+                                    <h3>Information</h3>
                                     <hr />
                                     <form:form
                                         method="post"
-                                        action="/client/information/update"
+                                        action="/infor/update"
                                         class="row"
                                         enctype="multipart/form-data"
                                         modelAttribute="inforUser"
@@ -112,6 +137,7 @@ uri="http://www.springframework.org/tags/form" %>
                                                 <form:option value="">-- Select Role --</form:option>
                                                 <form:option value="ADMIN">ADMIN</form:option>
                                                 <form:option value="USER">USER</form:option>
+                                                <form:option value="SHOP">SHOP</form:option>
                                             </form:select>
                                         </div>
                                         <div class="mb-3 col-12 col-md-6">
@@ -147,7 +173,7 @@ uri="http://www.springframework.org/tags/form" %>
                                         </div>
                                         <div class="col-12 mb-5">
                                             <button type="submit" class="btn btn-warning">Update</button>
-                                            <a href="/client" class="btn btn-success">Back</a>
+                                            <a href="/" class="btn btn-success">Back</a>
                                         </div>
                                     </form:form>
                                 </div>
@@ -158,7 +184,18 @@ uri="http://www.springframework.org/tags/form" %>
                 <jsp:include page="../layout/footer.jsp" />
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <!-- JavaScript Libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/client/lib/easing/easing.min.js"></script>
+        <script src="/client/lib/waypoints/waypoints.min.js"></script>
+        <script src="/client/lib/lightbox/js/lightbox.min.js"></script>
+        <script src="/client/lib/owlcarousel/owl.carousel.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="/client/js/main.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
+
         <script src="/js/scripts.js"></script>
     </body>
 </html>
